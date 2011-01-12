@@ -1,0 +1,7 @@
+
+1. create domain + folder
+2. create FTP account
+3. create DB + DB user + run db.sql
+4. copy folders (dont forget .htaccess)
+5. change config.ini
+

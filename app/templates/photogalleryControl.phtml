@@ -1,0 +1,20 @@
+<div id="photogallery">
+<pre>
+{if !empty($photos)}
+{foreach $photos as $photo}
+  {var $thumb $photo->getMediaGroup()->getThumbnail();}
+  {var $content $photo->getMediaGroup()->getContent();}
+<!--  <div>
+    <a href="{$content[0]->getUrl()}">
+      <img src="{$thumb[0]->getUrl()}" alt="{$photo->getSummary()}" />
+    </a>
+    {if $photo->getSummary() != ''}
+    <span>{$photo->getSummary()}</span>
+    {/if}
+  </div>-->		$photos[] = new PhotoVO("{$content[0]->getUrl()}", "{$thumb[0]->getUrl()}", "{$photo->getSummary()}");
+{/foreach}
+{else}
+<p>Nebyly přidány žádné fotografie</p>
+{/if}
+</pre>
+</div>

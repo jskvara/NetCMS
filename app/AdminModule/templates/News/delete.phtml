@@ -1,0 +1,7 @@
+{block #title}{block #h1}Smazat novinku{/block} | {include #parent}{/block}
+
+{block #content}
+
+<div class="notice">Opravdu chcete smazat novinku: ’{$news->getTitle()}’?</div>
+{widget deleteForm}
+

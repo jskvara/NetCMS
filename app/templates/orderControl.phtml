@@ -1,0 +1,11 @@
+{var $showForm true}
+{foreach $flashes as $flash}
+    {if $flash->type === "order"}
+        {$showForm = false}
+        <div class="notice">{$flash->message}</div>
+    {/if}
+{/foreach}
+
+{if $showForm === true}
+{widget orderForm}
+{/if}

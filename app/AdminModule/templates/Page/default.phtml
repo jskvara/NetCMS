@@ -1,0 +1,26 @@
+{block #title}{block #h1}Stránky{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link add}">Přidat stránku</a></p>
+
+<table class="grid">
+<tr>
+	<th>Url</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $pages as $page}
+<tr>
+	<td>{if $page->getUrl() !== ""}/{/if}{$page->getUrl()}/</td>
+	<td>
+		<a target="_blank" href="{link :Front:Default:default $page->getUrl()}">Zobrazit</a> &nbsp; 
+		<a href="{link editContent, $page->getId()}">Obsah</a> &nbsp; 
+		<a href="{link edit, $page->getId()}">Nastavení</a> &nbsp; 
+		<a href="{link delete, $page->getId()}">Smazat</a> &nbsp; 
+		{if $page->getPosition() != 1}<a href="{link moveUp, $page->getId()}" title="Posunout nahoru">^</a>{else}&nbsp;{/if} &nbsp; 
+		{if $page->getPosition() != $maxPosition}<a href="{link moveDown, $page->getId()}" title="Posunout dolů">v</a>{else}&nbsp;{/if} &nbsp; 
+	</td>
+</tr>
+{/foreach}
+</table>

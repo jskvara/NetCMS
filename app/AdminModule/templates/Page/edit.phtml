@@ -1,0 +1,7 @@
+{block #title}{block #h1}Upravit stránku{/block} | {include #parent}{/block}
+
+{block #content}
+
+{widget pageForm}
+
+<p><a href="{link add, 'parentUrl' => $page->getUrl()}">Přidat podstránku</a></p>

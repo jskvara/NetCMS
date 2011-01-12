@@ -1,0 +1,22 @@
+{block #title}{block #h1}Šablony{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link add}">Přidat šablonu</a></p>
+
+<table class="grid">
+<tr>
+	<th>Jméno</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $files as $file}
+<tr>
+	<td>{$file->getName()}</td>
+	<td>
+		<a href="{link edit, $id => $file->getName()}">Upravit</a> &nbsp; 
+		<a href="{link delete, $id => $file->getName()}">Smazat</a> &nbsp; 
+	</td>
+</tr>
+{/foreach}
+</table>

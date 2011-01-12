@@ -1,0 +1,22 @@
+h1 {
+	text-align: center;
+}
+
+.info {
+	background: #FFF6BF;
+	border:2px solid #FFD324;
+	color: #514721;
+	margin-bottom: 1em;
+	padding: .8em;
+}
+
+.error {
+	color: red;
+}
+
+#login {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2em;
+	width: 260px;
+}

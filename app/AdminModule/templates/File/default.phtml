@@ -1,0 +1,25 @@
+{block #title}{block #h1}Soubory{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link add}">Přidat soubory</a></p>
+
+<table class="grid">
+<tr>
+	<th>Soubor</th>
+	<th>Akce</th>
+</tr>
+{if $files === null}
+<tr>
+	<td colspan="2">Nejsou nahrány žádné soubory.</td>
+</tr>
+{else}
+{foreach $files as $file}
+<tr>
+	<td><!--{$basePath}/{$uploadDir}/-->{$file}</td>
+	<td><a href="{link delete, file => $file}">Smazat</a></td>
+</tr>
+
+{/foreach}
+{/if}
+</table>

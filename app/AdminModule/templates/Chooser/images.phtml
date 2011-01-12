@@ -1,0 +1,41 @@
+{block #title}{block #h1}Obrázky{/block} | {include #parent}{/block}
+
+{block #content}
+
+<script type="text/javascript">
+//<![CDATA[
+var fileDir = '{!basePath}/{!uploadDir}/';
+
+function getUrlParam(paramName) {
+	var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
+	var match = window.location.search.match(reParam) ;
+	
+	return (match && match.length > 1) ? match[1] : '' ;
+}
+
+function selectImage(imageName) {
+	var funcNum = getUrlParam('CKEditorFuncNum');
+	window.opener.CKEDITOR.tools.callFunction(funcNum, fileDir + imageName);
+	window.close();
+}
+//]]>
+</script>
+
+<table class="grid" width="100%">
+<tr>
+	<th>Soubor</th><th>Náhled</th>
+</tr>
+{if $files === null}
+<tr>
+	<td colspan="2">Nejsou nahrány žádné obrázky (soubory .jpg, .jpeg, .png, .gif).</td>
+</tr>
+{else}
+{foreach $files as $file}
+<tr>
+	<td><a href="javascript:selectImage('{$file}');">{$file}</a></td>
+	<td><img src="{$basePath}/{$uploadDir}/{$file}" width="100" /></td>
+</tr>
+
+{/foreach}
+{/if}
+</table>

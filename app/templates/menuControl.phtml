@@ -1,0 +1,26 @@
+<div id="menu">
+  <h3>Menu</h3>
+  {ifset $menu}
+  <ul>
+    {foreach $menu as $menuPage}
+      <li {ifset $menuPage['active']}class="active"{/if}><a href="{plink :Front:Default:default $menuPage['url']}">{$menuPage['title']}</a></li>
+      {if isset($menuPage['active']) && !empty($menuPage['childern'])}
+        <ul>
+        {foreach $menuPage['childern'] as $child}
+          <li {ifset $child['active']}class="active"{/if}><a href="{plink :Front:Default:default $child['url']}">{$child['title']}</a></li>
+          {if isset($child['active']) && !empty($child['childern'])}
+            <ul>
+            {foreach $child['childern'] as $child2}
+              <li {ifset $child2['active']}class="active"{/if}><a href="{plink :Front:Default:default $child2['url']}">{$child2['title']}</a></li>
+            {/foreach}
+            </ul>
+          {/if}
+        {/foreach}
+        </ul>
+      {/if}
+    {/foreach}
+  </ul>
+  {else}
+  <p>Nebyly přidány žádné stránky</p>
+  {/if}
+</div>
