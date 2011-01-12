@@ -122,6 +122,39 @@ class PageService {
 		$this->DAO->swapPosition($position, $position + 1);
 	}
 	
+	public function move($pageUrl, $positionUrl) {
+		$movedPage = $this->DAO->findByUrl($pageUrl);
+		if ($movedPage === null) {
+			throw new ServiceException('Přesouvaná stránka neexistuje.');
+		}
+		
+		$moveAfterPage = $this->DAO->findByUrl($positionUrl);
+		if ($moveAfterPage === null) {
+			throw new ServiceException('Stránka za kterou má bý přesunuto neexistuje.');
+		}
+		
+		$movedPagePosition = $movedPage->getPosition();
+		$moveAfterPagePosition = $moveAfterPage->getPosition();
+		
+		if($movedPagePosition === $moveAfterPagePosition) { // move nothing
+			return true;
+		}
+		
+		if ($movedPagePosition > $moveAfterPagePosition) { // move up
+			$this->DAO->moveAllDown($moveAfterPagePosition+1, $movedPagePosition-1);
+			$this->DAO->moveToPosition($movedPage->getUrl(), $moveAfterPagePosition+1);
+			
+			return true;
+		}
+		
+		if ($movedPagePosition < $moveAfterPagePosition) { // move down
+			$this->DAO->moveAllUp($movedPagePosition+1, $moveAfterPagePosition);
+			$this->DAO->moveToPosition($movedPage->getUrl(), $moveAfterPagePosition);
+			
+			return true;
+		}
+	}
+	
 	public function getMaxPosition() {
 		return $this->DAO->getMaxPosition();
 	}

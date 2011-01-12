@@ -90,7 +90,30 @@ class PageDAO extends AbstractDAO {
 		return dibi::query('UPDATE ['. $this->table .'] 
 			SET [position] = IF([position] = '.$position1.','.$position2.','.$position1.')
 			WHERE [position] IN ('.$position1.','.$position2.')');
-		// $query = $this->conn->update($this->table, array())->where(), transaction
+	}
+	
+	public function moveAllDown($positionFrom, $positionTo) {
+		return dibi::query('UPDATE ['. $this->table .']
+			SET [position] = [position] + 1
+			WHERE [position] >= '.$positionFrom.' AND [position] <= '.$positionTo.'
+		');
+	}
+	
+	public function moveAllUp($positionFrom, $positionTo) {
+		if ($positionFrom === $positionTo) {
+			return true;
+		}
+		
+		return dibi::query('UPDATE ['. $this->table .']
+			SET [position] = [position] - 1
+			WHERE [position] >= '.$positionFrom.' AND [position] <= '.$positionTo.'
+		');
+	}
+	
+	public function moveToPosition($url, $position) {
+		return dibi::query('UPDATE ['. $this->table .']
+			SET [position] = '.$position.'
+			WHERE [url] = %s', $url);
 	}
 	
 	public function insert(IEntity $news) {

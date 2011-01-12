@@ -56,7 +56,7 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 		$form->addSelect('template', 'Šablona', $templates)->setDefaultValue('default');
 		
 		$pages = $this->pageService->getSelect();
-		$form->addSelect('position', 'Zařadit za:', $pages);
+		$form->addSelect('positionUrl', 'Zařadit za:', $pages);
 		
 		$form->addHidden('parentUrl')->setValue('');
 		
@@ -86,11 +86,15 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 			$parentUrl = $form['parentUrl']->getValue();
 			$visible = $form['visible']->getValue();
 			$template = $form['template']->getValue();
-			$position = $form['position']->getValue();
+			$positionUrl = $form['positionUrl']->getValue();
 			
 			if ($id > 0) {
 				try {
-					$this->pageService->edit($id, $name, $parentUrl, $visible, $template, $position);
+					$this->pageService->edit($id, $name, $parentUrl, $visible, $template);
+					if ($positionUrl !== "") {
+						$pageUrl = UrlUtil::createUrl($parentUrl, $name);
+						$this->pageService->move($pageUrl, $positionUrl);
+					}
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;

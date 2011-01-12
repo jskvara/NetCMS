@@ -8,7 +8,7 @@ class UrlUtil {
 			$parentUrl = $parentUrl .'/';
 		}
 		
-		return $parentUrl . $name;
+		return $parentUrl.$name;
 	}
 	
 	public static function getParentUrl($url) {
