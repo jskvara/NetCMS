@@ -15,12 +15,14 @@ class BreadcrumbsControl extends Control {
 		// homepage
 		$breadcrumbs[] = $pages['']->toArray();
 		
-		$urlParts = explode('/', $url);
-		$urlKey = "";
-		foreach ($urlParts as $key => $part) {
-			$urlKey .= $part;
-			$breadcrumbs[] = $pages[$urlKey]->toArray();
-			$urlKey .= '/';
+		if ($url !== '') {
+			$urlParts = explode('/', $url);
+			$urlKey = "";
+			foreach ($urlParts as $key => $part) {
+				$urlKey .= $part;
+				$breadcrumbs[] = $pages[$urlKey]->toArray();
+				$urlKey .= '/';
+			}
 		}
 		
 		$template->breadcrumbs = $breadcrumbs;
