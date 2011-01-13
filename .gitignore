@@ -1,0 +1,4 @@
+# ignore temp and log directory
+app/log/
+app/temp/
+
