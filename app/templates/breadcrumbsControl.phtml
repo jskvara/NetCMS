@@ -1,0 +1,9 @@
+<div class="breadcrumbs">
+  {foreach $breadcrumbs as $breadcrumb}
+    {if $iterator->isLast()}
+      {$breadcrumb['title']}
+    {else}
+      <a href="{plink :Front:Default:default $breadcrumb['url']}">{$breadcrumb['title']}</a> &gt;
+    {/if}
+  {/foreach}
+</div>

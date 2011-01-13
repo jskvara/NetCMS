@@ -12,8 +12,8 @@ class MenuControl extends Control {
 		$pages = $pageService->getMenu();
 		$menu = array();
 		foreach ($pages as $key => $page) {
-			$urlParts = explode('/', $page->getUrl());
-			$active = ($page->getUrl() === $url);
+			$urlParts = explode('/', $page['url']);
+			$active = ($page['url'] === $url);
 			if (count($urlParts) === 1) {
 				$menu[$urlParts[0]] = $page->toArray();
 				$menu[$urlParts[0]]['childern'] = array();

@@ -31,9 +31,9 @@ class PageDAO extends AbstractDAO {
 		$query = $this->conn->select('url, title')->from($this->table)->where('visible=%i', 1)->orderBy('position', dibi::ASC);
 		
 		$result = $query->execute();
-		$result = $this->setRowClass($result);
+		// $result = $this->setRowClass($result);
 		
-		return $result->fetchAll();
+		return $result->fetchAssoc('url');
 	}
 	
 	public function find($id) {

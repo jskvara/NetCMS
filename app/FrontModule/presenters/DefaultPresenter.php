@@ -34,6 +34,10 @@ class Front_DefaultPresenter extends BasePresenter {
 		return new MenuControl();
 	}
 	
+	public function createComponentBreadcrumbs() {
+		return new BreadcrumbsControl();
+	}
+	
 	public function createComponentPhotogallery() {
 		return new PhotogalleryControl();
 	}
