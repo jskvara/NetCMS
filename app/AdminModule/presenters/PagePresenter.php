@@ -105,6 +105,10 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 			} else {
 				try {
 					$this->pageService->add($name, $parentUrl, $visible, $template);
+					if ($positionUrl !== "") {
+						$pageUrl = UrlUtil::createUrl($parentUrl, $name);
+						$this->pageService->move($pageUrl, $positionUrl);
+					}
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;
