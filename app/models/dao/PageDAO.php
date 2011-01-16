@@ -116,6 +116,12 @@ class PageDAO extends AbstractDAO {
 			WHERE [url] = %s', $url);
 	}
 	
+	public function renameSubpages($oldUrl, $newUrl) {
+		return dibi::query("UPDATE [". $this->table ."]
+			SET [url] = REPLACE([url], '". $oldUrl ."', '". $newUrl ."')
+			WHERE [url] LIKE '". $oldUrl ."/%'");
+	}
+	
 	public function insert(IEntity $news) {
 		$data = $news->toArray();
 		
