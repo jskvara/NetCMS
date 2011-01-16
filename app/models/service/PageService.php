@@ -25,7 +25,7 @@ class PageService {
 		$pages = $this->DAO->findMenu();
 		$select = array();
 		foreach ($pages as $key => $page) {
-			$url = $page->getUrl();
+			$url = $page["url"];
 			$select[$url] = $url;
 		}
 		
@@ -69,7 +69,16 @@ class PageService {
 			throw new ServiceException($e);
 		}
 		
+		$oldPage = $this->DAO->find($id);
+		if ($oldPage === null) {
+			throw new ServiceException('Stránka neexistuje.');
+		}
 		$this->DAO->update($page);
+		$oldUrl = $oldPage->getUrl();
+		$newUrl = $page->getUrl();
+		if ($oldUrl !== $newUrl) {
+			$this->DAO->renameSubpages($oldUrl, $newUrl);
+		}
 		
 		return true;
 	}
