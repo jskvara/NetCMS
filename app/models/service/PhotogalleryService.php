@@ -12,5 +12,9 @@ class PhotogalleryService {
 		return $this->DAO->getPhotosInAlbum($album);
 	}
 	
+	public function regenerate() {
+		$this->DAO->regenerate();
+	}
+	
 }
 

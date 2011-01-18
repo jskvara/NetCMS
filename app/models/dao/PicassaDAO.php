@@ -27,6 +27,14 @@ class PicassaDAO extends AbstractDAO {
 		return $photos;
 	}
 	
+	public function regenerate() {
+		$config = Environment::getConfig('picasa');
+		
+		if (file_exists($config->cache)) {
+			unlink($config->cache);
+		}
+	}
+	
 	public function findAll() {
 		throw new NotImplementedException('Method '. __METHOD__ .' is not implemented.');
 	}
