@@ -2,53 +2,29 @@
 
 class PicassaDAO extends AbstractDAO {
 	
-	protected $client;
-	protected $user;
-	
-	public function __construct() {
-		// load classes
-		ini_set("memory_limit","16M");
-		Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
-		Zend_Loader::loadClass('Zend_Gdata_Photos');
-		Zend_Loader::loadClass('Zend_Gdata_Photos_AlbumQuery');
-		
-		$config = Environment::getConfig('picasa');
-		$this->user = $config->user;
-		$this->client = Zend_Gdata_ClientLogin::getHttpClient($config->email, $config->password, Zend_Gdata_Photos::AUTH_SERVICE_NAME);
-	}
-	
 	public function getPhotosInAlbum($album) {
-		$albumPhotos = array();
-		$photos = new Zend_Gdata_Photos($this->client);
+		$config = Environment::getConfig('picasa');
 		
-		
-		
-		/*$query = new Zend_Gdata_Photos_UserQuery();
-		$query->setUser($this->user);
-		try {
-			$userFeed = $photos->getUserFeed(null, $query);
-			var_export($userFeed);
-		} catch (Zend_Gdata_App_Exception $e) {
-			echo "Error: " . $e->getMessage();
-		}exit;*/
-		
-		
-		$query = new Zend_Gdata_Photos_AlbumQuery();
-		$query->setUser($this->user);
-		$query->setAlbumId($album);
-		
-		$albumFeed = $photos->getAlbumFeed($query);
-		foreach ($albumFeed as $entry) {
-			if ($entry instanceof Zend_Gdata_Photos_PhotoEntry) {
-				$albumPhotos[] = $entry;
-				// $entry->getGphotoId();
-				// $entry->getTitle();
-				// $thumb = $entry->getMediaGroup()->getThumbnail();
-				// $thumb[1]->getUrl();
+		if (!file_exists($config->cache)) {
+			$url = $config->proxyUrl ."?user=". $config->user ."&password=". $config->password;
+			$file = file_get_contents($url);
+			$file = rtrim($file);
+			if (substr($file, -1) !== "}") {
+				throw new ServiceException("Soubor není kompletní.");
 			}
+			$file = "<?php\n\n". $file;
+			file_put_contents($config->cache, $file);
+		}
+		require_once $config->cache;
+		
+		$albums = new Albums();
+		$method = "getAlbum". $album;
+		if (!method_exists($albums, $method)) {
+			throw new ServiceException("Album neexistuje.");
 		}
 		
-		return $albumPhotos;
+		$photos = call_user_func(array($albums, $method));
+		return $photos;
 	}
 	
 	public function findAll() {
