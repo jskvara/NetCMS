@@ -1,0 +1,26 @@
+{block #title}Překlady | {include #parent}{/block}
+{block #h1}Překlady{/block}
+
+{block #content}
+
+<p><a href="{link add}">Přidat záznam</a></p>
+
+<table class="grid">
+<tr>
+	<th>Originál</th>
+	<th>Překlad</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $itemsCollection as $item}
+<tr>
+	<td>/{$item->getOriginal()}/</td>
+	<td>/{$item->getTranslation()}/</td>
+	<td>
+		<a href="{link edit, $item->getId()}">Upravit</a> &nbsp;
+		<a href="{link delete, $item->getId()}">Smazat</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+{/block}

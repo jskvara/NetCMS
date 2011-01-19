@@ -36,6 +36,15 @@ class PageDAO extends AbstractDAO {
 		return $result->fetchAssoc('url');
 	}
 	
+	public function findLanguage($language) {
+		$query = $this->conn->select('url, title')->from($this->table)
+			->where('visible=%i', 1)->and('url')->like('%s', $language.'/%')->or('url=%s', $language)
+			->orderBy('position', dibi::ASC);
+		$result = $query->execute();
+		
+		return $result->fetchAssoc('url');
+	}
+	
 	public function find($id) {
 		$query = $this->conn->select('*')->from($this->table)->where($this->pk.'=%i', $id)->limit(1);
 		$result = $query->execute();

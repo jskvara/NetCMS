@@ -1,57 +1,53 @@
 <?php
 
-class CalendarService {
+class TranslationService {
 	
 	protected $DAO;
 	protected $converter;
 	protected $validator;
 	
 	public function __construct() {
-		$this->DAO = new CalendarDAO();
-		$this->converter = new CalendarConverter();
-		$this->validator = new CalendarValidator();
+		$this->DAO = new TranslationDAO();
+		$this->converter = new TranslationConverter();
+		$this->validator = new TranslationValidator();
 	}
 	
 	public function getAll() {
 		return $this->DAO->findAll();
 	}
 	
-	public function getAllOrderByDate() {
-		return $this->DAO->findAll(null, null, 'date', 'DESC');
-	}
-	
 	public function get($id) {
 		return $this->DAO->find($id);
 	}
 	
-	public function add($date, $text) {
-		$calendar = new CalendarEntity(null, $date, $text);
+	public function add($original, $translation) {
+		$translation = new TranslationEntity(null, $original, $translation);
 		try {
-			$this->converter->convert($calendar);
-			$this->validator->validateAdd($calendar);
+			$this->converter->convert($translation);
+			$this->validator->validateAdd($translation);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
 		}
 		
-		$this->DAO->insert($calendar);
+		$this->DAO->insert($translation);
 		
 		return true;
 	}
 	
-	public function edit($id, $date, $text) {
+	public function edit($id, $original, $translation) {
 		if ($this->validator->validateId($id) !== true) {
 			throw new ServiceException($this->validator->getLastError());
 		}
 		
-		$calendar = new CalendarEntity($id, $date, $text);
+		$translation = new TranslationEntity($id, $original, $translation);
 		try {
-			$this->converter->convert($calendar);
-			$this->validator->validate($calendar);
+			$this->converter->convert($translation);
+			$this->validator->validate($translation);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
 		}
 		
-		$this->DAO->update($calendar);
+		$this->DAO->update($translation);
 		
 		return true;
 	}
@@ -62,9 +58,5 @@ class CalendarService {
 		}
 		
 		$this->DAO->delete($id);
-	}
-	
-	public function getHomepageNews() {
-		return $this->DAO->findAll(5);
 	}
 }

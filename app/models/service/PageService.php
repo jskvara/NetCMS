@@ -32,6 +32,17 @@ class PageService {
 		return $select;
 	}
 	
+	public function getLanguageSelect($language) {
+		$pages = $this->DAO->findLanguage($language);
+		$select = array();
+		foreach ($pages as $key => $page) {
+			$url = $page["url"];
+			$select[$url] = $url;
+		}
+		
+		return $select;
+	}
+	
 	public function get($id) {
 		return $this->DAO->find($id);
 	}

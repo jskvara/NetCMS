@@ -25,3 +25,11 @@ CREATE TABLE `page` (
 
 INSERT INTO `page` (`id`, `name`, `url`, `title`, `content`, `visible`, `position`, `template`) 
 VALUES (1, '', '', 'Home page', '<h1>Home page</h1><p>Text text text</p>', 1, 1, 'default');
+
+ALTER TABLE  `page` ADD INDEX (  `url` );
+
+CREATE TABLE  `nettecms`.`translation` (
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`original` VARCHAR( 255 ) NOT NULL,
+	`translation` VARCHAR( 255 ) NOT NULL
+) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_czech_ci;
