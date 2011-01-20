@@ -4,15 +4,20 @@ class Front_DefaultPresenter extends BasePresenter {
 	
 	protected $pageService;
 	protected $templateService;
+	protected $translationService;
 	
 	public function __construct() {
 		$this->pageService = new PageService();
 		$this->templateService = new TemplateService();
+		$this->translationService = new TranslationService();
 		parent::__construct();
 	}
 	
 	public function renderDefault($url) {
 		$page = $this->pageService->getByUrl($url);
+		$translation = $this->translationService->getTranslation($url);
+		$language = $this->translationService->getLanguage($url);
+		$translationLanguage = $this->translationService->getLanguage($translation);
 		
 		if ($page === null) {
 			throw new BadRequestException();
@@ -24,6 +29,9 @@ class Front_DefaultPresenter extends BasePresenter {
 		
 		$this->template->url = $url;
 		$this->template->page = $page;
+		$this->template->translation = $translation;
+		$this->template->language = $language;
+		$this->template->translationLanguage = $translationLanguage;
 	}
 	
 	public function createComponentNews() {

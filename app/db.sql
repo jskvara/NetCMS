@@ -33,3 +33,6 @@ CREATE TABLE  `nettecms`.`translation` (
 	`original` VARCHAR( 255 ) NOT NULL,
 	`translation` VARCHAR( 255 ) NOT NULL
 ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_czech_ci;
+
+ALTER TABLE `translation` ADD UNIQUE (`original`,`translation`);
+

@@ -26,6 +26,14 @@ class TranslationDAO extends AbstractDAO {
 		return $result->fetch();
 	}
 	
+	public function findTranslation($url) {
+		$query = $this->conn->select('*')->from($this->table)->where('original=%s', $url)->or('translation=%s', $url)->limit(1);
+		$result = $query->execute();
+		$result = $this->setRowClass($result);
+		
+		return $result->fetch();
+	}
+	
 	public function insert(IEntity $news) {
 		$data = $news->toArray();
 		

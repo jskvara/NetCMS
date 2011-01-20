@@ -12,6 +12,32 @@ class TranslationService {
 		$this->validator = new TranslationValidator();
 	}
 	
+	public function getLanguage($url) {
+		$lang = substr($url, 0, 3);
+		if ($lang === "cs/") {
+			return "cs";
+		} else if ($lang === "en/") {
+			return "en";
+		} else {
+			return null;
+		}
+	}
+	
+	public function getTranslation($url) {
+		$translation = $this->DAO->findTranslation($url);
+		if ($translation === false) {
+			return null;
+		}
+		
+		if ($translation->getOriginal() === $url) {
+			return $translation->getTranslation();
+		} else if ($translation->getTranslation() === $url) {
+			return $translation->getOriginal();
+		} else {
+			return null;
+		}
+	}
+	
 	public function getAll() {
 		return $this->DAO->findAll();
 	}

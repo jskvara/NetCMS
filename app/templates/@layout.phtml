@@ -9,7 +9,10 @@
 </head>
 
 <body>
-  <div id="header">Header</div>
+  <div id="header">
+    Header 
+    {if !empty($translation)}Translation: <a href="{link :Front:Default: $translation}">{$translationLanguage}</a>{/if}
+  </div>
 
   <div id="sidebar">
     {widget menu, $url}

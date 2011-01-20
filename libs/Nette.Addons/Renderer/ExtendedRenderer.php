@@ -42,11 +42,12 @@ class ExtendedRenderer extends ConventionalRenderer {
 		}
 		
 		// checkbox shows normally
-		if (/*$control instanceof Checkbox ||*/ $control instanceof Button) {
+		if (/*$control instanceof Checkbox ||*/ $control instanceof Button ) {
 			return $body->setHtml((string) $control->getControl() . (string) $control->getLabel() . $description);
-
+		} else if($control->getOption('oneLine') === true) {
+			return $body->setHtml((string) $control->getLabel() ." &nbsp; ". (string) $control->getControl() . $description);
 		} else {
-			return $body->setHtml( $predescription . (string)$control->getControl() . $description);
+			return $body->setHtml($predescription . (string)$control->getControl() . $description);
 		}
 	}
 	
@@ -60,7 +61,7 @@ class ExtendedRenderer extends ConventionalRenderer {
 		$head = $this->getWrapper('label container');
 
 		// checkbox shows normally
-		if (/*$control instanceof Checkbox ||*/ $control instanceof Button) {
+		if (/*$control instanceof Checkbox ||*/ $control instanceof Button || $control->getOption('oneLine') === true) {
 			return $head->setHtml(($head->getName() === 'td' || $head->getName() === 'th') ? '&nbsp;' : '');
 
 		} else {
