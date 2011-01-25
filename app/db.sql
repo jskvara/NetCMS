@@ -28,7 +28,7 @@ VALUES (1, '', '', 'Home page', '<h1>Home page</h1><p>Text text text</p>', 1, 1,
 
 ALTER TABLE  `page` ADD INDEX (  `url` );
 
-CREATE TABLE  `nettecms`.`translation` (
+CREATE TABLE  `translation` (
 	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`original` VARCHAR( 255 ) NOT NULL,
 	`translation` VARCHAR( 255 ) NOT NULL
