@@ -10,7 +10,7 @@
 
 <body>
   <div id="header">
-    Header 
+    Header {? echo date('Y')}
     {if !empty($translation)}Translation: <a href="{link :Front:Default: $translation}">{$translationLanguage}</a>{/if}
   </div>
 
