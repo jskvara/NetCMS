@@ -21,7 +21,7 @@ final class Admin_ContactPresenter extends Admin_BasePresenter {
 		
 		$form->addText('email', 'Odpověď poslat na e-mail:')
 			->addRule(Form::EMAIL, 'Zadejte, prosím, platný email.')
-			->setDefaultValue($config->email)
+			->setDefaultValue($config->emailFrom)
 			->setOption('oneLine', true);
 				
 		$form->addSubmit('save', 'Odeslat')->getControlPrototype()->class('default');
@@ -39,7 +39,7 @@ final class Admin_ContactPresenter extends Admin_BasePresenter {
 			
 			$mail = new Mail();
 			$mail->setFrom($form['email']->getValue());
-			$mail->addTo($config->adminEmail);
+			$mail->addTo($config->emailTo);
 			$mail->setSubject("Administrace webu: ". $config->email);
 			$mail->setBody($form['text']->getValue());
 			$mail->send();
