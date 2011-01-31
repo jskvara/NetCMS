@@ -2,24 +2,52 @@
 
 {block #content}
 
-<p><a href="{link add}">Přidat soubory</a></p>
+{if $current_folder === null}
+<p><a href="{link add}">Přidat soubory</a> &nbsp; <a href="{link addFolder}">Přidat složku</a></p>
+{else}
+<p><a href="{link add, folder => $current_folder}">Přidat soubory</a></p>
+{/if}
 
 <table class="grid">
+{if $current_folder === null}
 <tr>
-	<th>Soubor</th>
+	<th>Složky</th>
 	<th>Akce</th>
 </tr>
+{if $folders === null}
+<tr>
+	<td colspan="2">Nejsou zde žádné složky.</td>
+</tr>
+{else}
+{foreach $folders as $folder}
+<tr>
+	<td><a href="{link default, folder => $folder}">{$folder}</a></td>
+	<td><a href="{link delete, file => $folder}">Smazat</a></td>
+</tr>
+{/foreach}
+{/if}
+{/if}
+<tr>
+	<th>Soubory {if $current_folder != null}&nbsp; [Aktuální složka: {$current_folder}]{/if}</th>
+	<th>Akce</th>
+</tr>
+{if $current_folder !== null}
+<tr>
+	<td><a href="{link default}">[Nadřazená složka]</a></td>
+	<td><a href="{link default}">^</a></td>
+</tr>
+{/if}
 {if $files === null}
 <tr>
 	<td colspan="2">Nejsou nahrány žádné soubory.</td>
 </tr>
 {else}
 {foreach $files as $file}
+{if $current_folder !== null}{var $file $current_folder.'/'.$file}{/if}
 <tr>
-	<td><!--{$basePath}/{$uploadDir}/-->{$file}</td>
+	<td>{*$basePath}/{$uploadDir}/*}{$file}</td>
 	<td><a href="{link delete, file => $file}">Smazat</a></td>
 </tr>
-
 {/foreach}
 {/if}
 </table>

@@ -8,13 +8,14 @@ var fileDir = '{!basePath}/{!uploadDir}/';
 
 function getUrlParam(paramName) {
 	var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-	var match = window.location.search.match(reParam) ;
+	var match = window.location.search.match(reParam);
 	
 	return (match && match.length > 1) ? match[1] : '' ;
 }
 
 function selectImage(imageName) {
 	var funcNum = getUrlParam('CKEditorFuncNum');
+	funcNum = 1;
 	window.opener.CKEDITOR.tools.callFunction(funcNum, fileDir + imageName);
 	window.close();
 }
@@ -22,18 +23,38 @@ function selectImage(imageName) {
 </script>
 
 <table class="grid" width="100%">
+{if $folders !== null && $current_folder === null}
 <tr>
-	<th>Soubor</th><th>Náhled</th>
+	<th>Složky</th>
+	<th>Akce</th>
 </tr>
+{foreach $folders as $folder}
+<tr>
+	<td><a href="{link images, folder => $folder}">{$folder}</a></td>
+	<td><a href="{link images, folder => $folder}">Otevřít</a></td>
+</tr>
+{/foreach}
+{/if}
+<tr>
+	<th>Soubory {if $current_folder != null}&nbsp; [Aktuální složka: {$current_folder}]{/if}</th>
+	<th>Náhled</th>
+</tr>
+{if $current_folder !== null}
+<tr>
+	<td><a href="{link images}">[Nadřazená složka]</a></td>
+	<td><a href="{link images}">^</a></td>
+</tr>
+{/if}
 {if $files === null}
 <tr>
 	<td colspan="2">Nejsou nahrány žádné obrázky (soubory .jpg, .jpeg, .png, .gif).</td>
 </tr>
 {else}
 {foreach $files as $file}
+{if $current_folder !== null}{var $file $current_folder.'/'.$file}{/if}
 <tr>
 	<td><a href="javascript:selectImage('{$file}');">{$file}</a></td>
-	<td><img src="{$basePath}/{$uploadDir}/{$file}" width="100" /></td>
+	<td><a href="javascript:selectImage('{$file}');"><img src="{$basePath}/{$uploadDir}/{$file}" width="100" /></a></td>
 </tr>
 
 {/foreach}

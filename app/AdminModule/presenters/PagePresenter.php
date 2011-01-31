@@ -110,6 +110,7 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 						$this->pageService->move($pageUrl, $positionUrl);
 					}
 				} catch(ServiceException $e) {
+					$this->addParentUrl($parentUrl);
 					$this->showErrors($e);
 					return;
 				}

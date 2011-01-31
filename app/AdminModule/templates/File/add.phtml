@@ -2,5 +2,9 @@
 
 {block #content}
 
+{if $folder !== null}
+<p><strong>Složka: {$folder}</strong></p>
+{/if}
 {widget fileForm}
 
+{/block}

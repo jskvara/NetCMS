@@ -10,22 +10,34 @@ class FileService {
 		$this->DAO = new FileDAO();
 	}
 	
-	public function getAll() {
-		return $this->DAO->findAll();
+	public function getFiles($folder = null) {
+		return $this->DAO->findAllFiles($folder);
 	}
 	
-	public function getImages() {
-		return $this->DAO->findAllImages();
+	public function getImages($folder = null) {
+		return $this->DAO->findAllImages($folder);
+	}
+	
+	public function getFolders() {
+		return $this->DAO->findAllFolders();
 	}
 	
 	public function get($file) {
 		return $this->DAO->find($file);
 	}
 	
-	public function add($file) {
+	public function isDir($file) {
+		return $this->DAO->isDir($file);
+	}
+	
+	public function getDir($file) {
+		return $this->DAO->getDir($file);
+	}
+	
+	public function add($file, $folder = null, $thumb = false) {
 		try {
-			if ($file->isOk()) {				
-				$this->DAO->save($file);
+			if ($file->isOk()) {
+				$this->DAO->save($file, $folder, $thumb);
 			} else {
 				throw new ServiceException('Obrázek se nezdařilo nahrát na server.');
 			}
@@ -38,6 +50,10 @@ class FileService {
 	
 	public function delete($file) {
 		$this->DAO->delete($file);
+	}
+	
+	public function addFolder($folder) {
+		$this->DAO->createFolder($folder);
 	}
 }
 

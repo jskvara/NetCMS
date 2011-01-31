@@ -36,10 +36,10 @@ abstract class Admin_BasePresenter extends BasePresenter {
 	protected function showErrors(Exception $e) {
 		if ($e->getValidationErrors() !== null) {
 			foreach ($e->getValidationErrors() as $error) {
-				$this->flashMessage($error, 'error');
+				$this->flashMessage($error, "error");
 			}
 		} else {
-			$this->flashMessage($e->getMessage());
+			$this->flashMessage($e->getMessage(), "error");
 		}
 	}
 	
