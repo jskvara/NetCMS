@@ -65,9 +65,7 @@ class PageService {
 			throw new ServiceException($e);
 		}
 		
-		$this->DAO->insert($page);
-		
-		return true;
+		return $this->DAO->insert($page);
 	}
 	
 	public function edit($id, $name, $parentUrl, $visible, $template) {

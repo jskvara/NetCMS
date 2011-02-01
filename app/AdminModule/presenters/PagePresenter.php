@@ -104,7 +104,7 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 				$this->flashMessage("<a href=\"".$link."\">Stránka</a> byla upravena.", "success");
 			} else {
 				try {
-					$this->pageService->add($name, $parentUrl, $visible, $template);
+					$id = $this->pageService->add($name, $parentUrl, $visible, $template);
 					if ($positionUrl !== "") {
 						$pageUrl = UrlUtil::createUrl($parentUrl, $name);
 						$this->pageService->move($pageUrl, $positionUrl);
@@ -115,7 +115,8 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 					return;
 				}
 				
-				$this->flashMessage('Stránka byla uložena.', 'success');
+				$link = $this->link('editContent', $id);
+				$this->flashMessage("<a href=\"".$link."\">Stránka</a> byla uložena.", 'success');
 			}
 		}
 

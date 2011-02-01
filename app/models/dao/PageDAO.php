@@ -134,7 +134,9 @@ class PageDAO extends AbstractDAO {
 	public function insert(IEntity $news) {
 		$data = $news->toArray();
 		
-		return $this->conn->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+		$this->conn->insert($this->table, $data)->execute(dibi::IDENTIFIER);
+		
+		return $this->conn->insertId();
 	}
 	
 	public function update(IEntity $news) {
