@@ -1,0 +1,24 @@
+{block #title}{block #h1}Osiva{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link add}">Přidat osiva</a></p>
+
+<table class="grid">
+<tr>
+	<th>Osiva</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $seeds as $seed}
+<tr>
+	<td>{$seed->getName()}</td>
+	<td>
+		<a href="{link view, $seed->getId()}">Zobrazit</a> &nbsp;
+		<a href="{link edit, $seed->getId()}">Upravit</a> &nbsp;
+		<a href="{link delete, $seed->getId()}">Smazat</a> 
+	</td>
+</tr>
+{/foreach}
+</table>
+{/block}

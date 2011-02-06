@@ -1,0 +1,8 @@
+{block #title}{block #h1}Smazat typ osiva{/block} | {include #parent}{/block}
+
+{block #content}
+
+<div class="notice">Opravdu chcete smazat typ osiva: ’{$seed->getName()}’?</div>
+{widget deleteItemForm}
+
+{/block}

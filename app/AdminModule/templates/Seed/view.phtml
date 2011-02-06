@@ -1,0 +1,36 @@
+{block #title}{block #h1}Osiva{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p>Osiva: <strong>{$seed->getName()}</strong></p>
+
+<p><a href="{link addSeedItem, $seed->getId()}">Přidat typ osiva</a></p>
+
+<table class="grid">
+<tr>
+	<th>Typ osiva</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $seedItems as $key => $seedItem}
+<tr>
+	<td>{$seedItem->getName()}</td>
+	<td>
+		<a href="{link editSeedItem, $seedItem->getId(), seedId => $seedItem->getSeedId()}">Upravit</a> &nbsp;
+		<a href="{link deleteSeedItem, $seedItem->getId(), seedId => $seedItem->getSeedId()}">Smazat</a> &nbsp;
+		{if $seedItem->getPosition() != 1}<a href="{link moveUp, $seedItem->getId(), $seedItem->getSeedId()}" title="Posunout nahoru">^</a>{else}&nbsp;{/if} &nbsp; 
+		{if $seedItem->getPosition() != $maxPosition}<a href="{link moveDown, $seedItem->getId(), $seedItem->getSeedId()}" title="Posunout dolů">v</a>{else}&nbsp;{/if} 
+	</td>
+	
+{*{!$seedItemForms[$key]->render("begin")}
+	<td>{!$seedItemForms[$key]["name"]->control}</td>
+	<td>
+		{!$seedItemForms[$key]["save"]->control}
+		<a href="{link deleteSeedItem, $seedItems[$key]->getId(), seedId => $seedItems[$key]->getSeedId()}">Smazat</a> 
+	</td>
+{!$seedItemForms[$key]->render("end")}*}
+</tr>
+{/foreach}
+</table>
+
+{/block}

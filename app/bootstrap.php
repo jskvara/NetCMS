@@ -9,8 +9,8 @@ error_reporting(E_ALL);
 require dirname(__FILE__) . '/../libs/Nette/loader.php';
 
 // Load Zend
-set_include_path(dirname(__FILE__) .'/../libs/:'. get_include_path());
-require_once 'Zend/Loader.php';
+// set_include_path(dirname(__FILE__) .'/../libs/:'. get_include_path());
+// require_once 'Zend/Loader.php';
 
 
 // Step 2: Configure environment
