@@ -182,7 +182,12 @@ class PageService {
 			throw new ServiceException('Id stránky nesmí být prázdné.');
 		}
 		
+		$page = $this->DAO->find($id);
+		if ($page === null) {
+			throw new ServiceException("Stránka neexistuje");
+		}
 		$this->DAO->delete($id);
+		$this->DAO->moveAllUp($page->getPosition()+1);
 	}
 	
 	protected function validateId($id) {

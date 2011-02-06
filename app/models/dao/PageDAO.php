@@ -108,7 +108,7 @@ class PageDAO extends AbstractDAO {
 		');
 	}
 	
-	public function moveAllUp($positionFrom, $positionTo) {
+	public function moveAllUp($positionFrom, $positionTo = 9999) {
 		if ($positionFrom === $positionTo) {
 			return true;
 		}
