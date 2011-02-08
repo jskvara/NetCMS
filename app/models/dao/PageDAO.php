@@ -84,6 +84,14 @@ class PageDAO extends AbstractDAO {
 		return $page;
 	}
 	
+	public function findSubpages($url) {
+		$query = $this->conn->select("*")->from($this->table)->where("url LIKE '".$url."/%'")->orderBy("position", dibi::ASC);
+		$result = $query->execute();
+		$result = $this->setRowClass($result);
+		
+		return $result->fetchAll();
+	}
+	
 	public function getMaxPosition() {
 		$query = $this->conn->select('MAX([position])')->from($this->table);
 		$result = $query->execute();

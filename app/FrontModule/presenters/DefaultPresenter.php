@@ -57,4 +57,16 @@ class Front_DefaultPresenter extends BasePresenter {
 	public function createComponentOrder() {
 		return new OrderControl();
 	}
+	
+	public function createComponentSeed() {
+		return new SeedControl();
+	}
+	
+	public function createComponentEmailing() {
+		return new EmailingControl();
+	}
+	
+	public function createComponentSubpages() {
+		return new SubpagesControl();
+	}
 }

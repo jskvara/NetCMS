@@ -51,6 +51,10 @@ class PageService {
 		return $this->DAO->findByUrl($url);
 	}
 	
+	public function getSubpages($url) {
+		return $this->DAO->findSubpages($url);
+	}
+	
 	public function add($name, $parentUrl, $visible, $template) {
 		try {
 			$position = $this->DAO->getMaxPosition();

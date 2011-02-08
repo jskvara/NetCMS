@@ -1,0 +1,9 @@
+<div id="subpages">
+{ifset $subpages}
+<ul>
+{foreach $subpages as $subpage}
+  <li><a href="{plink :Front:Default:default $subpage->getUrl()}">{$subpage->getTitle()}</a></li>
+{/foreach}
+</ul>
+{/if}
+</div>

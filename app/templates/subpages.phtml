@@ -1,0 +1,6 @@
+{extends @layout.phtml}
+
+{block content}
+{!$page->getContent()}
+{widget subpages, $url}
+{/block}
