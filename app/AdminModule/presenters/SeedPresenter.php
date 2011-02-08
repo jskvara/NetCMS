@@ -30,6 +30,7 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 		$this->template->seedItems = $seedItems;
 		//$this->template->seedItemForms = $seedItemForms;
 		$this->template->maxPosition = $this->seedService->getMaxPosition($id);
+		$this->template->registerHelper("strip_tags", "strip_tags");
 	}
 	
 	public function renderAddSeedItem($id = null) {
@@ -50,7 +51,16 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 				$this->redirect('default');
 			}
 			
-			$form->setDefaults($seedItem->toArray());
+			$defaults = $seedItem->toArray();
+			for ($i = 1; $i <= 52; $i++) {
+				if ($defaults["w".$i] & 1) {
+					$defaults["w".$i."v"] = true;
+				}
+				if ($defaults["w".$i] & 2) {
+					$defaults["w".$i."s"] = true;
+				}
+			}
+			$form->setDefaults($defaults);
 		}
 	}
 	
@@ -64,7 +74,13 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 		$form->addText('resistence', 'Rezistence:')
 			->addRule(Form::MAX_LENGTH, 'Rezistence smí mít maximálně %d znaků', 255);
 		
+		for ($i = 1; $i <= 52; $i++) {
+			$form->addCheckbox("w".$i."v", "Týden ".$i." výs:");
+			$form->addCheckbox("w".$i."s", "Týden ".$i." skl:");
+		}
+		
 		$form->addHidden('seedId', 0);
+		$form->addHidden("id", 0);
 		
 		$form->addSubmit('save', 'Uložit')->getControlPrototype()->class('default');
 		$form->addSubmit('cancel', 'Zpět')->setValidationScope(null);
@@ -118,31 +134,33 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 	
 	public function seedItemFormSubmitted(AppForm $form)
 	{
-		$seedId = (int) $this->getParam('id');// $form['seedId']->getValue();
-		if ($form['save']->isSubmittedBy()) {
-			$id = 0; //(int) $this->getParam('id');
-			$name = $form['name']->getValue();
-			$resistence = $form['resistence']->getValue();
+		$seedId = $form["seedId"]->getValue();
+		if ($form["save"]->isSubmittedBy()) {
+			$name = $form["name"]->getValue();
+			$resistence = $form["resistence"]->getValue();
+			$id = $form["id"]->getValue();
+			$weeks = array();
+			for ($i = 1; $i <= 52; $i++) {
+				$weeks[$i] = $form["w".$i."v"]->getValue() ^ (2 * $form["w".$i."s"]->getValue());
+			}
 			
 			if ($id > 0) {
 				try {
-					$this->seedService->editSeedItem($id, $seedId, $name, $resistence);
+					$this->seedService->editSeedItem($id, $seedId, $name, $resistence, $weeks);
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;
 				}
 			} else {
 				try {
-					$id = $this->seedService->addSeedItem($seedId, $name, $resistence);
+					$id = $this->seedService->addSeedItem($seedId, $name, $resistence, $weeks);
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;
 				}
 			}
-			
 			$this->flashMessage("Typ osiva byl uložen.", 'success');
 		}
-		
 		$this->redirect("view", array("id" => $seedId));
 	}
 	

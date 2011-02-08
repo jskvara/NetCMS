@@ -11,9 +11,12 @@ class SeedItemConverter extends AbstractConverter {
 		return $entity;
 	}
 	
-	public function toEntity($id, $seedId, $name, $resistence, $color, $position) {
+	public function toEntity($id, $seedId, $name, $resistence, $color, $position, $weeks) {
 		$this->entity = new SeedItemEntity($id, $seedId, $name, $resistence, $color, $position);
 		$this->_convert();
+		foreach ($weeks as $key => $value) {
+			call_user_func(array($this->entity, "setW".$key), $value);
+		}
 		
 		return $this->entity;
 	}

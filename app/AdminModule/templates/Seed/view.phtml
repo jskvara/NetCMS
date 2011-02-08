@@ -4,7 +4,7 @@
 
 <p>Osiva: <strong>{$seed->getName()}</strong></p>
 
-<p><a href="{link addSeedItem, $seed->getId()}">Přidat typ osiva</a></p>
+<p><a href="{link addSeedItem, $seed->getId()}">Přidat typ osiva</a> &nbsp; <a href="{link default}">Přehled osiv</a></p>
 
 <table class="grid">
 <tr>
@@ -14,7 +14,7 @@
 
 {foreach $seedItems as $key => $seedItem}
 <tr>
-	<td>{$seedItem->getName()}</td>
+	<td>{$seedItem->getName()|strip_tags}</td>
 	<td>
 		<a href="{link editSeedItem, $seedItem->getId(), seedId => $seedItem->getSeedId()}">Upravit</a> &nbsp;
 		<a href="{link deleteSeedItem, $seedItem->getId(), seedId => $seedItem->getSeedId()}">Smazat</a> &nbsp;

@@ -5,7 +5,9 @@ class SeedService {
 	protected $DAO;
 	protected $converter;
 	protected $validator;
-	protected $ItemsDAO;
+	protected $itemsDAO;
+	protected $itemConverter;
+	protected $itemValidator;
 	
 	public function __construct() {
 		$this->DAO = new SeedDAO();
@@ -15,7 +17,7 @@ class SeedService {
 		$this->itemConverter = new SeedItemConverter();
 		$this->itemValidator = new SeedItemValidator();
 	}
-	
+		
 	public function getSeeds() {
 		return $this->DAO->findAll();
 	}
@@ -73,7 +75,7 @@ class SeedService {
 		$this->DAO->delete($id);
 	}
 	
-	public function addSeedItem($seedId, $name, $resistence) {
+	public function addSeedItem($seedId, $name, $resistence, $weeks) {
 		$return = false;
 		try {
 			$color = "";
@@ -83,7 +85,7 @@ class SeedService {
 			} else {
 				$position = $position + 1;
 			}
-			$seedItem = $this->itemConverter->toEntity(null, $seedId, $name, $resistence, $color, $position);
+			$seedItem = $this->itemConverter->toEntity(null, $seedId, $name, $resistence, $color, $position, $weeks);
 			$this->itemValidator->validateAdd($seedItem);
 			$return = $this->itemDAO->insert($seedItem);
 		} catch (Exception $e) {
@@ -93,9 +95,11 @@ class SeedService {
 		return $return;
 	}
 	
-	public function editSeedItem($id, $seedId, $name, $resistence) {
+	public function editSeedItem($id, $seedId, $name, $resistence, $weeks) {
 		try {
-			$seedItem = $this->itemConverter->toEntity($id, $seedId, $name, $resistence);
+			$color = "";
+			$position = null;
+			$seedItem = $this->itemConverter->toEntity($id, $seedId, $name, $resistence, $color, $position, $weeks);
 			$this->itemValidator->validate($seedItem);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
