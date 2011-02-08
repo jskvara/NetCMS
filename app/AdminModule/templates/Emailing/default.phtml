@@ -1,0 +1,23 @@
+{block #title}{block #h1}Poslat e-maily{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link send}">Poslat e-maily</a></p>
+<p><a href="{link add}">Přidat e-mail</a></p>
+
+<table class="grid">
+<tr>
+	<th>E-mail</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $emails as $email}
+<tr>
+	<td>{$email->getEmail()}</td>
+	<td>
+		<a href="{link delete, $email->getId()}">Smazat</a> 
+	</td>
+</tr>
+{/foreach}
+</table>
+{/block}

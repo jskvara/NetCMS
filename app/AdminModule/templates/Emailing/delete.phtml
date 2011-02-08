@@ -1,0 +1,8 @@
+{block #title}{block #h1}Smazat e-mail{/block} | {include #parent}{/block}
+
+{block #content}
+
+<div class="notice">Opravdu chcete smazat e-mail: ’{$entity->getEmail()}’?</div>
+{widget deleteForm}
+
+{/block}
