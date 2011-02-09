@@ -38,9 +38,9 @@ class SeedService {
 		return $this->itemDAO->getMaxPosition($seedId);
 	}
 	
-	public function add($name) {
+	public function add($name, $description) {
 		try {
-			$seed = $this->converter->toEntity(null, $name);
+			$seed = $this->converter->toEntity(null, $name, $description);
 			$this->validator->validateAdd($seed);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
@@ -49,10 +49,10 @@ class SeedService {
 		return $this->DAO->insert($seed);
 	}
 	
-	public function edit($id, $name) {
+	public function edit($id, $name, $description) {
 		$seed = null;
 		try {
-			$seed = $this->converter->toEntity($id, $name);
+			$seed = $this->converter->toEntity($id, $name, $description);
 			$this->validator->validate($seed);
 		} catch (Exception $e) {
 			throw new ServiceException($e);

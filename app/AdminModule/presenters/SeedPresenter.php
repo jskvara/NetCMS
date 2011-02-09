@@ -189,6 +189,9 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 		$form->addText('name', 'Název osiva:')
 			->addRule(Form::MAX_LENGTH, 'Název osiva smí mít maximálně %d znaků', 255);
 		
+		$form->addText("description", "Popis:")
+			->addRule(Form::MAX_LENGTH, "Popis osiva smí mít maximálně %d znaků", 255);
+		
 		$form->addSubmit('save', 'Uložit')->getControlPrototype()->class('default');
 		$form->addSubmit('cancel', 'Zpět')->setValidationScope(null);
 		$form->onSubmit[] = callback($this, 'seedFormSubmitted');
@@ -202,10 +205,11 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 		if ($form['save']->isSubmittedBy()) {
 			$id = (int) $this->getParam('id');
 			$name = $form['name']->getValue();
+			$description = $form["description"]->getValue();
 			
 			if ($id > 0) {
 				try {
-					$this->seedService->edit($id, $name);
+					$this->seedService->edit($id, $name, $description);
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;
@@ -215,7 +219,7 @@ final class Admin_SeedPresenter extends Admin_BasePresenter {
 				$this->flashMessage("<a href=\"".$link."\">Osivo</a> bylo upraveno.", "success");
 			} else {
 				try {
-					$id = $this->seedService->add($name);
+					$id = $this->seedService->add($name, $description);
 				} catch(ServiceException $e) {
 					$this->showErrors($e);
 					return;

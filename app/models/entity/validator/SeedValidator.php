@@ -9,6 +9,7 @@ class SeedValidator implements IValidator {
 		
 		$this->validateId($entity->getId());
 		$this->validateName($entity->getName());
+		$this->validateDescription($entity->getDescription());
 		
 		if (!empty($this->errors)) {
 			throw new ValidatorException($this->errors);
@@ -21,6 +22,7 @@ class SeedValidator implements IValidator {
 		$this->errors = array();
 		
 		$this->validateName($entity->getName());
+		$this->validateDescription($entity->getDescription());
 		
 		if (!empty($this->errors)) {
 			throw new ValidatorException($this->errors);
@@ -38,6 +40,10 @@ class SeedValidator implements IValidator {
 	}
 	
 	protected function validateName($name) {
+		return true;
+	}
+	
+	protected function validateDescription($description) {
 		return true;
 	}
 	
