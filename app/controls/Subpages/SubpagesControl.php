@@ -9,10 +9,10 @@ class SubpagesControl extends Control {
 		
 		$pageService = new PageService();
 		$allSubpages = $pageService->getSubpages($url);
-		$subpages = null;
+		$subpages = array();
 		foreach ($allSubpages as $subpage) {
-			$url = str_replace($url ."/", "", $subpage->getUrl());
-			if (strpos($url, "/") === false) {
+			$u = str_replace($url."/", "", $subpage->getUrl());
+			if (strpos($u, "/") === false) {
 				$subpages[] = $subpage;
 			}
 		}
