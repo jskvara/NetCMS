@@ -4,3 +4,7 @@ app/temp/
 
 # ignore todo
 app/todo.txt
+
+#ignore other folders
+libs/
+tests/

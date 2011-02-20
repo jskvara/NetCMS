@@ -11,7 +11,7 @@
 </tr>
 
 {foreach $pages as $page}
-<tr>
+<tr{if $iterator->isEven()} class="alt"{/if}>
 	<td>{if $page->getUrl() !== ""}/{/if}{$page->getUrl()}/</td>
 	<td>
 		<a target="_blank" href="{link :Front:Default:default $page->getUrl()}">Zobrazit</a> &nbsp; 
