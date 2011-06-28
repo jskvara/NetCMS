@@ -28,7 +28,11 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 			}
 			
 			$values = $news->toArray();
-			$values['created'] = $values['created']->format('j. n. Y');
+			if (is_object($values['created'])) {
+				$values['created'] = $values['created']->format('j. n. Y');
+			} else {
+				$values['created'] = date("j. n. Y", $values['created']);
+			}
 			$form->setDefaults($values);
 		}
 	}
@@ -39,7 +43,8 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 		$form->addText('title', 'Nadpis:')
 			->addRule(Form::FILLED, 'Musíte vyplnit nadpis novinky.');
 
-		$form->addTextarea('text', 'Text:');
+		$form->addTextarea('text', 'Text:')
+			->setHtmlId('pageContent');
 		
 		$form->addText('created', 'Vytvořeno:')
 			->setValue(date('j. n. Y'));

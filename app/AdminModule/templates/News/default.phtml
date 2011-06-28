@@ -8,14 +8,14 @@
 <table class="grid">
 <tr>
 	<th>Nadpis</th>
-	<th>Text</th>
+	<th>Datum</th>
 	<th>Akce</th>
 </tr>
 
 {foreach $newsCollection as $news}
 <tr>
 	<td>{$news->getTitle()}</td>
-	<td>{$news->getText()}</td>
+	<td>{$news->getCreated()}</td>
 	<td>
 		<a href="{link edit, $news->getId()}">Upravit</a> &nbsp;
 		<a href="{link delete, $news->getId()}">Smazat</a>

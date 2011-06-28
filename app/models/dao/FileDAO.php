@@ -60,7 +60,7 @@ class FileDAO extends AbstractDAO {
 		}
 		
 		if ($this->exists($filename)) {
-			throw new ServiceException("Soubor již existuje.");
+			throw new ServiceException("Soubor s tímto jménem již existuje.");
 		}
 		
 		if ($file->isImage() && $thumb) {

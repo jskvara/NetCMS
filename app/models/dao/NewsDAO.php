@@ -14,9 +14,18 @@ class NewsDAO extends AbstractDAO {
             '%if', isset($offset), 'OFFSET %i %end', $offset
         )->setRowClass('Todo');*/
 		
-		$query = $this->conn->select('*')->from($this->table)->orderBy('id', dibi::ASC);
-		// where
-		// orderBy
+		$query = $this->conn->select('*')->from($this->table)->orderBy('created', dibi::DESC);
+		if ($limit != null) { $query->limit($limit); }
+		if ($offset != null) { $query->offset($offset); }
+		
+		$result = $query->execute();
+		$result = $this->setRowClass($result);
+		
+		return $result->fetchAll();
+	}
+	
+	public function findVisible($limit = null, $offset = null) {
+		$query = $this->conn->select('*')->from($this->table)->where('visible=%i', 1)->orderBy('created', dibi::DESC);
 		if ($limit != null) { $query->limit($limit); }
 		if ($offset != null) { $query->offset($offset); }
 		
@@ -39,6 +48,7 @@ class NewsDAO extends AbstractDAO {
 	public function insert(IEntity $news) {
 		// return $this->em->persist($news);
 		$data = $news->toArray();
+		$data = $this->convertDate($data);
 		
 		return $this->conn->insert($this->table, $data)->execute(dibi::IDENTIFIER);
 	}
@@ -49,6 +59,7 @@ class NewsDAO extends AbstractDAO {
 		if (array_key_exists($this->pk, $data)) {
 			unset($data[$this->pk]);
 		}
+		$data = $this->convertDate($data);
 		
 		$query = $this->conn->update($this->table, $data)->where($this->pk .'=%i', $news->getId());
 		return $query->execute();
@@ -65,6 +76,14 @@ class NewsDAO extends AbstractDAO {
 		$result = $result->setRowClass('NewsEntity')->setType('visible', dibi::BOOL);
 		
 		return $result;
+	}
+	
+	protected function convertDate($data) {
+		if (!is_object($data['created'])) { // PHP 5.2 compatibility
+			$data['created'] = date("Y-m-d H:i:s", $data['created']);
+		}
+		
+		return $data;
 	}
 
 }

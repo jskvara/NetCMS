@@ -39,7 +39,7 @@ class FileService {
 			if ($file->isOk()) {
 				$this->DAO->save($file, $folder, $thumb);
 			} else {
-				throw new ServiceException('Obrázek se nezdařilo nahrát na server.');
+				throw new ServiceException('Soubor se nezdařilo nahrát na server.');
 			}
 		} catch (Exception $e) {
 			throw new ServiceException($e);

@@ -23,9 +23,14 @@ abstract class AbstractConverter implements IConverter {
 			return null;
 		}
 		
-		$date = DateTime::createFromFormat('j. n. Y', $date);
+		if (method_exists(new DateTime(), "createFromFormat")) {
+			$date = DateTime::createFromFormat('j. n. Y', $date);
+		} else {
+			$date = str_replace(" ", "", $date);
+			$date = strToTime($date);
+		}
 		if ($date === false) {
-			throw new ConverterException(array('Chybný formát data.'));
+			throw new ConverterException("Chybný formát data.");
 		}
 		
 		return $date;

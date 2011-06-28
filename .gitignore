@@ -1,10 +1,13 @@
-# ignore temp and log directory
+# temp and log directory
 app/log/
 app/temp/
 
-# ignore todo
+# todo
 app/todo.txt
 
-#ignore other folders
+# userfiles
+document_root/userfiles/
+
+# other folders
 libs/
 tests/

@@ -4,14 +4,18 @@ class SeedEntity extends AbstractEntity {
 	protected $id;
 	protected $name;
 	protected $description;
+	protected $harvest;
+	protected $text;
 	
-	public function __construct($id = null, $name = null, $description = null) {
+	public function __construct($id = null, $name = null, $description = null, $harvest = null, $text = null) {
 		if (is_array($id)) {
 			$this->fromArray($id);
 		} else {
 			$this->setId($id);
 			$this->setName($name);
 			$this->setDescription($description);
+			$this->setHarvest($harvest);
+			$this->setText($text);
 		}
 	}
 	
@@ -37,5 +41,21 @@ class SeedEntity extends AbstractEntity {
 	
 	public function setDescription($description) {
 		$this->description = $description;
+	}
+	
+	public function getHarvest() {
+		return $this->harvest;
+	}
+	
+	public function setHarvest($harvest) {
+		$this->harvest = $harvest;
+	}
+	
+	public function getText() {
+		return $this->text;
+	}
+	
+	public function setText($text) {
+		$this->text = $text;
 	}
 }

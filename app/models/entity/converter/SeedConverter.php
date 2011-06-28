@@ -11,8 +11,8 @@ class SeedConverter extends AbstractConverter {
 		return $entity;
 	}
 	
-	public function toEntity($id, $name, $description) {
-		$this->entity = new SeedEntity($id, $name, $description);
+	public function toEntity($id, $name, $description, $harvest, $text) {
+		$this->entity = new SeedEntity($id, $name, $description, $harvest, $text);
 		$this->_convert();
 		
 		return $this->entity;
@@ -22,6 +22,8 @@ class SeedConverter extends AbstractConverter {
 		$this->convertId();
 		$this->convertName();
 		$this->convertDescription();
+		$this->convertHarvest();
+		$this->convertText();
 	}
 	
 	protected function convertId() {
@@ -34,5 +36,11 @@ class SeedConverter extends AbstractConverter {
 	}
 	
 	protected function convertDescription() {
+	}
+
+	protected function convertHarvest() {
+	}
+	
+	protected function convertText() {
 	}
 }

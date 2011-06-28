@@ -16,6 +16,14 @@ class NewsService {
 		return $this->DAO->findAll();
 	}
 	
+	public function getHomepageNews() {
+		return $this->DAO->findVisible(5);
+	}
+	
+	public function getVisible() {
+		return $this->DAO->findVisible();
+	}
+	
 	public function get($id) {
 		return $this->DAO->find($id);
 	}
@@ -59,10 +67,5 @@ class NewsService {
 		
 		$this->DAO->delete($id);
 	}
-	
-	public function getHomepageNews() {
-		return $this->DAO->findAll(5);
-	}
-	
 }
 
