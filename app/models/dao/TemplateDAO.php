@@ -43,20 +43,31 @@ class TemplateDAO extends AbstractDAO {
 	}
 	
 	public function insert(IEntity $template) {
-		return $this->fileUtil->save($this->getFilename($template->getName()), $template->getContent());
+		try {
+			return $this->fileUtil->save($this->getFilename($template->getName()), $template->getContent());
+		} catch (IOException $e) {
+			throw new ServiceException($e->getMessage());
+		}
 	}
 	
 	public function update(IEntity $template) {
-		return $this->fileUtil->save($this->getFilename($template->getName()), $template->getContent());
+		try {
+			return $this->fileUtil->save($this->getFilename($template->getName()), $template->getContent());
+		} catch (IOException $e) {
+			throw new ServiceException($e->getMessage());
+		}
 	}
 		
 	public function delete($name) {
-		return $this->fileUtil->delete($this->getFilename($name));
+		try {
+			return $this->fileUtil->delete($this->getFilename($name));
+		} catch (IOException $e) {
+			throw new ServiceException($e->getMessage());
+		}
 	}
 	
 	public function getFilename($name) {
 		return $this->dir .'/'. $name . $this->extension;
 	}
-
 }
 

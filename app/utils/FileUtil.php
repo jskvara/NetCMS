@@ -71,6 +71,16 @@ class FileUtil {
 	}
 	
 	public function save($filename, $content) {
+		if (!is_writeable(dirname($filename))) {
+			throw new IOException("Directory '". dirname($filename). "' is not writeable (must have 777 permissions).");
+		}
+		
+		if (file_exists($filename)) {
+			if (!is_writeable($filename)) {
+				throw new IOException("File '". $filename. "' is not writeable (must have 666 permissions).");
+			}
+		}
+		
 		return file_put_contents('safe://'. $filename, $content);
 	}
 	
@@ -79,6 +89,10 @@ class FileUtil {
 	}
 	
 	public function delete($filename) {
+		if (!is_writeable(dirname($filename))) {
+			throw new IOException("Directory '". dirname($filename). "' is not writeable (must have 777 permissions).");
+		}
+		
 		return unlink('safe://'. $filename);
 	}
 	
