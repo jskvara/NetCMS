@@ -8,6 +8,9 @@ app/todo.txt
 # userfiles
 document_root/userfiles/
 
+#templates
+#app/templates/
+
 # other folders
 libs/
 tests/
