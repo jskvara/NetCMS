@@ -11,7 +11,14 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 	}
 
 	public function renderDefault() {
-		$this->template->newsCollection = $this->newsService->getAll();
+		$newsCollection = $this->newsService->getAll();
+		foreach ($newsCollection as $news) {
+			if (is_object($news->getCreated())) {
+				$news->setCreated($news->getCreated()->format('j. n. Y'));
+			}
+		}
+		
+		$this->template->newsCollection = $newsCollection;
 	}
 	
 	public function renderAdd() {

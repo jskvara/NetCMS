@@ -20,8 +20,8 @@ class NewsService {
 		return $this->DAO->findVisible(5);
 	}
 	
-	public function getVisible() {
-		return $this->DAO->findVisible();
+	public function getVisible($limit = null, $offset = null) {
+		return $this->DAO->findVisible($limit, $offset);
 	}
 	
 	public function get($id) {

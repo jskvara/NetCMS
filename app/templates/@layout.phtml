@@ -10,8 +10,9 @@
 
 <body>
   <div id="header">
+    <a href="{$basePath}/admin/">Admin</a> | 
     Header {? echo date('Y')}
-    {if !empty($translation)}Translation: <a href="{link :Front:Default: $translation}">{$translationLanguage}</a>{/if}
+    {if !empty($translation)}{$language} Translation: <a href="{link :Front:Default: $translation}">{$translationLanguage}</a>{/if}
   </div>
 
   <div id="sidebar">

@@ -5,8 +5,7 @@ error_reporting(E_ALL);
 // Step 1: Load Nette Framework
 // this allows load Nette Framework classes automatically so that
 // you don't have to litter your code with 'require' statements
-// require LIBS_DIR . '/Nette/loader.php';
-require dirname(__FILE__) . '/../libs/Nette/loader.php';
+require LIBS_DIR . '/Nette/loader.php';
 
 // Load Zend
 // set_include_path(dirname(__FILE__) .'/../libs/:'. get_include_path());

@@ -13,14 +13,15 @@ class TranslationService {
 	}
 	
 	public function getLanguage($url) {
-		$lang = substr($url, 0, 3);
-		if ($lang === "cs/") {
-			return "cs";
-		} else if ($lang === "en/") {
-			return "en";
-		} else {
+		if (strlen($url) < 2) {
 			return null;
 		}
+		
+		if (strlen($url > 2) && substr($url, 2, 1) !== "/") {
+			return null;
+		}
+		
+		return substr($url, 0, 2);
 	}
 	
 	public function getTranslation($url) {
