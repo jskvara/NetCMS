@@ -5,3 +5,11 @@
 4. copy folders (dont forget .htaccess)
 5. change config.ini
 
+
+edit this app
+- move app do document_root
+- edit APP_DIR in index.php
+- delete document_root/userfiles/*
+- chmod 777 app/log app/temp
+- delete app/db.sql app/install.txt
+- Debug::enable(); in app/bootstrap.php
