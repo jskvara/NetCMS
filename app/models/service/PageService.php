@@ -55,7 +55,7 @@ class PageService {
 		return $this->DAO->findSubpages($url);
 	}
 	
-	public function add($name, $parentUrl, $visible, $template) {
+	public function add($name, $parentUrl, $visible, $template, $redirect) {
 		try {
 			$position = $this->DAO->getMaxPosition();
 			if ($position == null) {
@@ -63,7 +63,8 @@ class PageService {
 			} else {
 				$position = $position + 1;
 			}
-			$page = $this->converter->toEntity(null, $name, $parentUrl, null, null, $visible, $position, $template);
+			$page = $this->converter->toEntity(null, $name, $parentUrl, null, 
+					null, $visible, $position, $template, $redirect);
 			$this->validator->validateAdd($page);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
@@ -72,11 +73,12 @@ class PageService {
 		return $this->DAO->insert($page);
 	}
 	
-	public function edit($id, $name, $parentUrl, $visible, $template) {
+	public function edit($id, $name, $parentUrl, $visible, $template, $redirect) {
 		$this->validateId($id);
 		
 		try {
-			$page = $this->converter->toEntity($id, $name, $parentUrl, null, null, $visible, null, $template);
+			$page = $this->converter->toEntity($id, $name, $parentUrl, null, 
+					null, $visible, null, $template, $redirect);
 			$this->validator->validate($page);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
@@ -100,7 +102,7 @@ class PageService {
 		$this->validateId($id);
 		
 		try {
-			$page = $this->converter->toEntity($id, null, null, $title, $content, null, null, null);
+			$page = $this->converter->toEntity($id, null, null, $title, $content, null, null, null, null);
 			$this->validator->validatePageContent($page);
 		} catch (Exception $e) {
 			throw new ServiceException($e);

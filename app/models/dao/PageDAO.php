@@ -139,21 +139,21 @@ class PageDAO extends AbstractDAO {
 			WHERE [url] LIKE '". $oldUrl ."/%'");
 	}
 	
-	public function insert(IEntity $news) {
-		$data = $news->toArray();
+	public function insert(IEntity $entity) {
+		$data = $entity->toArray();
 		
 		$this->conn->insert($this->table, $data)->execute(dibi::IDENTIFIER);
 		
 		return $this->conn->insertId();
 	}
 	
-	public function update(IEntity $news) {
-		$data = $news->toArray();
+	public function update(IEntity $entity) {
+		$data = $entity->toArray();
 		if (array_key_exists($this->pk, $data)) {
 			unset($data[$this->pk]);
 		}
 		
-		return $this->conn->update($this->table, $data)->where($this->pk .'=%i', $news->getId())->execute();
+		return $this->conn->update($this->table, $data)->where($this->pk .'=%i', $entity->getId())->execute();
 	}
 		
 	public function delete($id) {

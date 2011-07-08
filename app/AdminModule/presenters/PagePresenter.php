@@ -48,17 +48,20 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 			->addRule(Form::MAX_LENGTH, 'Adresa smí mít maximálně %d znaků', 255)
 			->setOption('predescription', '/');
 		
-		$form->addCheckbox('visible', 'Zobrazit')
+		$form->addCheckbox('visible', 'Zobrazit:')
 			->setValue(true);
 		
 		
 		$templates = $this->templateService->getSelect();
-		$form->addSelect('template', 'Šablona', $templates)->setDefaultValue('default');
+		$form->addSelect('template', 'Šablona:', $templates)->setDefaultValue('default');
 		
 		$pages = $this->pageService->getSelect();
 		$form->addSelect('positionUrl', 'Zařadit za:', $pages);
 		
 		$form->addHidden('parentUrl')->setValue('');
+		
+		$form->addText('redirect', 'Přesměrování:')
+			->addRule(Form::MAX_LENGTH, 'Přesměrování smí mít maximálně %d znaků', 255);
 		
 		$form->addSubmit('save', 'Uložit')->getControlPrototype()->class('default');
 		$form->addSubmit('cancel', 'Zpět')->setValidationScope(null);
@@ -87,10 +90,11 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 			$visible = $form['visible']->getValue();
 			$template = $form['template']->getValue();
 			$positionUrl = $form['positionUrl']->getValue();
+			$redirect = $form['redirect']->getValue();
 			
 			if ($id > 0) {
 				try {
-					$this->pageService->edit($id, $name, $parentUrl, $visible, $template);
+					$this->pageService->edit($id, $name, $parentUrl, $visible, $template, $redirect);
 					if ($positionUrl !== "") {
 						$pageUrl = UrlUtil::createUrl($parentUrl, $name);
 						$this->pageService->move($pageUrl, $positionUrl);
@@ -104,7 +108,7 @@ final class Admin_PagePresenter extends Admin_BasePresenter {
 				$this->flashMessage("<a href=\"".$link."\">Stránka</a> byla upravena.", "success");
 			} else {
 				try {
-					$id = $this->pageService->add($name, $parentUrl, $visible, $template);
+					$id = $this->pageService->add($name, $parentUrl, $visible, $template, $redirect);
 					if ($positionUrl !== "") {
 						$pageUrl = UrlUtil::createUrl($parentUrl, $name);
 						$this->pageService->move($pageUrl, $positionUrl);

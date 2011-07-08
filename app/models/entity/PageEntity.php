@@ -22,8 +22,10 @@ class PageEntity extends AbstractEntity {
 	
 	protected $parentUrl;
 	
+	protected $redirect;
+	
 	public function __construct($id = null, $name = null, $url = null, $title = null, $content = null, 
-		$visible = null, $position = null, $template = null, $parentUrl = null) {
+		$visible = null, $position = null, $template = null, $parentUrl = null, $redirect = null) {
 		if (is_array($id)) {
 			$this->fromArray($id);
 		} else {
@@ -36,6 +38,7 @@ class PageEntity extends AbstractEntity {
 			$this->setPosition($position);
 			$this->setTemplate($template);
 			$this->setParentUrl($parentUrl);
+			$this->setRedirect($redirect);
 		}
 	}
 	
@@ -114,5 +117,12 @@ class PageEntity extends AbstractEntity {
 	public function setParentUrl($parentUrl) {
 		$this->parentUrl = $parentUrl;
 	}
+	
+	public function getRedirect() {
+		return $this->redirect;
+	}
+	
+	public function setRedirect($redirect) {
+		$this->redirect = $redirect;
+	}
 }
-

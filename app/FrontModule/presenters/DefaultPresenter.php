@@ -15,12 +15,17 @@ class Front_DefaultPresenter extends BasePresenter {
 	
 	public function renderDefault($url) {
 		$page = $this->pageService->getByUrl($url);
-		$translation = $this->translationService->getTranslation($url);
-		$language = $this->translationService->getLanguage($url);
-		$translationLanguage = $this->translationService->getLanguage($translation);
-		
+				
 		if ($page === null) {
 			throw new BadRequestException();
+		}
+		
+		if ($page->getRedirect() !== "") {
+			$redirect = $page->getRedirect();
+			if (!String::startsWith($redirect, "http://")) {
+				$redirect = rtrim(Environment::getVariable('baseUri'), "/") . $redirect;
+			}
+			$this->redirectUri($redirect);
 		}
 		
 		// Set page template
@@ -29,9 +34,7 @@ class Front_DefaultPresenter extends BasePresenter {
 		
 		$this->template->url = $url;
 		$this->template->page = $page;
-		$this->template->translation = $translation;
-		$this->template->language = $language;
-		$this->template->translationLanguage = $translationLanguage;
+		$this->template->translation = new TranslationDTO($page);
 	}
 	
 	public function createComponentNews() {

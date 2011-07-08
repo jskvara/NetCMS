@@ -12,13 +12,15 @@ class PageConverter extends AbstractConverter {
 		return $entity;
 	}
 	
-	public function toEntity($id, $name, $parentUrl, $title, $content, $visible, $position, $template) {
+	public function toEntity($id, $name, $parentUrl, $title, $content, 
+			$visible, $position, $template, $redirect) {
 		if ($name === null && $parentUrl === null) {
 			$url = null;
 		} else {
 			$url = UrlUtil::createUrl($parentUrl, $name);
 		}
-		$this->entity = new PageEntity($id, $name, $url, $title, $content, $visible, $position, $template, $parentUrl);
+		$this->entity = new PageEntity($id, $name, $url, $title, $content, 
+				$visible, $position, $template, $parentUrl, $redirect);
 		
 		$this->_convert();
 		
