@@ -8,6 +8,7 @@ class TemplateService {
 	
 	public function __construct() {
 		$this->DAO = new TemplateDAO();
+		$this->cssDAO = new CssDAO();
 		$this->converter = new TemplateConverter();
 		$this->validator = new TemplateValidator();
 		$this->validator->setDAO($this->DAO);
@@ -26,12 +27,20 @@ class TemplateService {
 		$select = array();
 		foreach ($templates as $key => $template) {
 			$name = $template->getName();
-			if (!String::startsWith($name, '@') && !String::endsWith($name, 'Control')) {
+			if (!$this->isLayout($name) && !$this->isControl($name)) {
 				$select[$name] = $name;
 			}
 		}
 		
 		return $select;
+	}
+	
+	protected function isLayout($name) {
+		return String::startsWith($name, '@');
+	}
+	
+	protected function isControl($name) {
+		return String::endsWith($name, 'Control');
 	}
 	
 	public function get($name) {
@@ -69,5 +78,44 @@ class TemplateService {
 		
 		return true;
 	}
+	
+	public function getCssAll() {
+		return $this->cssDAO->findAll();
+	}
+	
+	public function getCss($name) {
+		return $this->cssDAO->find($name);
+	}
+	
+	public function addCss($name, $content) {
+		try {
+			$template = $this->converter->toEntity($name, $content);
+			$this->validator->validateAdd($template);
+		} catch (Exception $e) {
+			throw new ServiceException($e);
+		}
+		
+		$this->cssDAO->insert($template);
+		
+		return true;
+	}
+	
+	public function editCss($name, $content) {
+		try {
+			$template = $this->converter->toEntity($name, $content);
+			$this->validator->validate($template);
+		} catch (Exception $e) {
+			throw new ServiceException($e);
+		}
+		
+		$this->cssDAO->update($template);
+		
+		return true;
+	}
+	
+	public function deleteCss($name) {
+		$this->cssDAO->delete($name);
+		
+		return true;
+	}
 }
-

@@ -1,0 +1,24 @@
+{block #title}{block #h1}Css{/block} | {include #parent}{/block}
+
+{block #content}
+
+<p><a href="{link addCss}">Přidat CSS</a></p>
+
+<table class="grid">
+<tr>
+	<th>Jméno</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $files as $file}
+<tr>
+	<td>{$file->getName()}</td>
+	<td>
+		<a href="{link editCss, $id => $file->getName()}">Upravit</a> &nbsp; 
+		<a href="{link deleteCss, $id => $file->getName()}">Smazat</a> &nbsp; 
+	</td>
+</tr>
+{/foreach}
+</table>
+
+{/block}

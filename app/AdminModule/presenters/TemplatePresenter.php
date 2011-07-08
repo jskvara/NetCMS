@@ -123,4 +123,116 @@ final class Admin_TemplatePresenter extends Admin_BasePresenter {
 		$this->redirect('default');
 	}
 	
+	public function renderCss() {
+		$this->template->files = $this->templateService->getCssAll();
+	}
+	
+	public function renderAddCss() {
+		$this['cssForm']['save']->caption = 'Přidat';
+	}
+	
+	public function renderEditCss($id = '') {
+		$name = $id;
+		$form = $this['cssForm'];
+		if (!$form->isSubmitted()) {
+			$css = $this->templateService->getCss($name);
+			if ($css === null) {
+				$this->flashMessage('Css soubor nebyl nalezen.', 'error');
+				$this->redirect('css');
+			}
+			
+			$values = $css->toArray();
+			$form->setDefaults($values);
+			$form['name']->getControlPrototype()->readonly = true;
+			$form['name']->getControlPrototype()->setClass('readonly');
+		}
+	}
+	
+	protected function createComponentCssForm() {
+		$form = new AppForm();
+		$form->setRenderer(new ExtendedRenderer());
+		
+		$form->addText('name', 'Jméno:')
+			->addRule(Form::FILLED, 'Jméno css souboru nesmí být prázdné')
+			->addRule(Form::REGEXP, 'Jméno css souboru smí obsahovat pouze: písmena, číslice, "_" a "-". Nahraďte mezery pomlčkou', '/^[a-zA-Z0-9-_@]+$/')
+			->addRule(Form::MAX_LENGTH, 'Jméno css souboru smí mít maximálně %d znaků', 30);
+		
+		$form->addTextarea('content', 'Obsah')
+			->getControlPrototype()->setClass('largeTextarea');
+		
+		$form->addSubmit('save', 'Uložit')->getControlPrototype()->class('default');
+		$form->addSubmit('cancel', 'Zpět')->setValidationScope(null);
+		$form->onSubmit[] = callback($this, 'cssFormSubmitted');
+		$form->addProtection('Odešlete formulář znovu (bezpečnostní kód vypršel).');
+		
+		return $form;
+	}
+
+	public function cssFormSubmitted(AppForm $form)
+	{
+		if ($form['save']->isSubmittedBy()) {
+			$name = $this->getParam('id');
+			$content = $form['content']->getValue();
+			
+			if ($name !== null) { // edit
+				try {
+					$this->templateService->editCss($name, $content);
+				} catch(ServiceException $e) {
+					$this->showErrors($e);
+					return;
+				}
+				
+				$this->flashMessage('Css soubor byl upraven.', 'success');
+			} else { // add
+				try {
+					$name = $form['name']->getValue();
+					$this->templateService->addCss($name, $content);
+				} catch(ServiceException $e) {
+					$this->showErrors($e);
+					return;
+				}
+				
+				$this->flashMessage('Css soubor byl uložen.', 'success');
+			}
+		}
+
+		$this->redirect('css');
+	}
+	
+	public function renderDeleteCss($id = null) {
+		$name = $id;
+		$template = $this->templateService->getCss($name);
+		if ($template == null) {
+			$this->flashMessage('Css soubor nebyl nalezen.', 'error');
+			$this->redirect('default');
+		}
+		
+		$this->template->templateEntity = $template;
+	}
+	
+	protected function createComponentDeleteCssForm() {
+		$form = new AppForm();
+		$form->addSubmit('delete', 'Smazat')->getControlPrototype()->class('default');
+		$form->addSubmit('cancel', 'Zpět');
+		$form->onSubmit[] = callback($this, 'deleteCssFormSubmitted');
+		$form->addProtection('Odešlete formulář znovu (bezpečnostní kód vypršel).');
+		
+		return $form;
+	}
+	
+	public function deleteCssFormSubmitted(AppForm $form) {
+		if ($form['delete']->isSubmittedBy()) {
+			$name = $this->getParam('id');
+			
+			try {
+				$this->templateService->deleteCss($name);
+				$this->flashMessage('Css soubor byl smazán.', 'success');
+			} catch(ServiceException $e) {
+				$this->showErrors($e);
+			}
+			
+		}
+
+		$this->redirect('css');
+	}
 }
