@@ -3,7 +3,7 @@
 {block #content}
 
 {if $current_folder === null}
-<p><a href="{link add}">Přidat soubory</a> &nbsp; <a href="{link addFolder}">Přidat složku</a></p>
+<p><a href="{link add}">Přidat soubory</a> &nbsp;|&nbsp; <a href="{link addFolder}">Přidat složku</a></p>
 {else}
 <p><a href="{link add, folder => $current_folder}">Přidat soubory</a></p>
 {/if}

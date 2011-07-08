@@ -12,14 +12,16 @@
 	<th>Akce</th>
 </tr>
 
-{foreach $newsCollection as $news}
+{foreach $items as $item}
 <tr>
-	<td>{$news->getTitle()}</td>
-	<td>{$news->getCreated()}</td>
+	<td>{$item->getTitle()}</td>
+	<td>{$item->getCreated()}</td>
 	<td>
-		<a href="{link edit, $news->getId()}">Upravit</a> &nbsp;
-		<a href="{link delete, $news->getId()}">Smazat</a>
+		<a href="{link edit, $item->getId()}">Upravit</a> &nbsp;
+		<a href="{link delete, $item->getId()}">Smazat</a>
 	</td>
 </tr>
 {/foreach}
 </table>
+
+{/block}
