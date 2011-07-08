@@ -12,13 +12,13 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 
 	public function renderDefault() {
 		$newsCollection = $this->newsService->getAll();
+		
+		$items = array();
 		foreach ($newsCollection as $news) {
-			if (is_object($news->getCreated())) {
-				$news->setCreated($news->getCreated()->format('j. n. Y'));
-			}
+			$items[] = new NewsDTO($news);
 		}
 		
-		$this->template->newsCollection = $newsCollection;
+		$this->template->items = $items;
 	}
 	
 	public function renderAdd() {
@@ -54,7 +54,8 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 			->setHtmlId('pageContent');
 		
 		$form->addText('created', 'Vytvořeno:')
-			->setValue(date('j. n. Y'));
+			->setValue(date('j. n. Y'))
+			->getControlPrototype()->setClass('datepicker');
 		
 		$form->addCheckbox('visible', 'Zobrazit')
 			->setValue(true);
