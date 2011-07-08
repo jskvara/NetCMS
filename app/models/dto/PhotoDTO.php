@@ -1,6 +1,6 @@
 <?php
 
-class PhotoVO {
+class PhotoDTO {
 	private $content;
 	private $thumbnail;
 	private $summary;
