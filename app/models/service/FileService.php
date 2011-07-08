@@ -11,7 +11,21 @@ class FileService {
 	}
 	
 	public function getFiles($folder = null) {
-		return $this->DAO->findAllFiles($folder);
+		$files = $this->DAO->findAllFiles($folder);
+		
+		$items = array();
+		foreach ($files as $file) {
+			if ($this->isThumb($file)) {
+				continue;
+			}
+			$items[] = $file;
+		}
+		
+		return $items;
+	}
+	
+	protected function isThumb($name) {
+		return strpos($name, "-thumb.") !== false;
 	}
 	
 	public function getImages($folder = null) {
@@ -49,11 +63,19 @@ class FileService {
 	}
 	
 	public function delete($file) {
-		$this->DAO->delete($file);
+		try {
+			$this->DAO->delete($file);
+		} catch (Exception $e) {
+			throw new ServiceException($e);
+		}
 	}
 	
 	public function addFolder($folder) {
-		$this->DAO->createFolder($folder);
+		try {
+			$this->DAO->createFolder($folder);
+		} catch (Exception $e) {
+			throw new ServiceException($e);
+		}
 	}
 }
 

@@ -11,7 +11,10 @@ final class Admin_FilePresenter extends Admin_BasePresenter {
 	}
 
 	public function renderDefault($folder = null) {
-		// $this->template->uploadDir = Environment::getVariable('uploadDir');
+		if ($folder === ".") {
+			$folder = null;
+		}
+	
 		$this->template->folders = $this->fileService->getFolders();
 		$this->template->current_folder = $folder;
 		$this->template->files = $this->fileService->getFiles($folder);
