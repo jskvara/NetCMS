@@ -39,7 +39,7 @@ final class Admin_CalendarPresenter extends Admin_BasePresenter {
 		
 		$form->addText('date', 'Datum:')
 			->setValue(date('j. n. Y'))
-			->getControlPrototype()->setClass('datepicker');;
+			->getControlPrototype()->setClass('datepicker');
 			
 		$form->addTextarea('text', 'Text:');
 		

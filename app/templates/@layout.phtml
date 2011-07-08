@@ -11,8 +11,8 @@
 <body>
   <div id="header">
     <a href="{$basePath}/admin/">Admin</a> | 
-    Header {? echo date('Y')}
-    {if !empty($translation)}{$language} Translation: <a href="{link :Front:Default: $translation}">{$translationLanguage}</a>{/if}
+    Header {? echo date('Y')}<br />
+    {if $translation->getTranslation() !== null}[{$translation->getLanguage()}] <a href="{link :Front:Default: $translation->getTranslation()}">[{$translation->getTranslationLanguage()}]</a>{/if}
   </div>
 
   <div id="sidebar">
