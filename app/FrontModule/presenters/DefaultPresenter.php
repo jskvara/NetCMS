@@ -20,7 +20,7 @@ class Front_DefaultPresenter extends BasePresenter {
 			throw new BadRequestException();
 		}
 		
-		if ($page->getRedirect() !== "") {
+		if ($page->getRedirect() != "") {
 			$redirect = $page->getRedirect();
 			if (!String::startsWith($redirect, "http://")) {
 				$redirect = rtrim(Environment::getVariable('baseUri'), "/") . $redirect;
