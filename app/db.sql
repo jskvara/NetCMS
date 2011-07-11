@@ -22,8 +22,7 @@ CREATE TABLE `page` (
 	`redirect` VARCHAR(255) NOT NULL DEFAULT '', -- added 6 May 2011
 	PRIMARY KEY (`id`),
 	UNIQUE (`name`, `url`),
-	INDEX (`url`),
-	KEY (`url`)
+	INDEX (`url`)
 ) ENGINE = INNODB DEFAULT CHARSET=utf8 COLLATE utf8_czech_ci;
 
 INSERT INTO `page` (`id`, `name`, `url`, `title`, `content`, `visible`, `position`, `template`) 
