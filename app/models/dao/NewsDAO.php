@@ -35,6 +35,13 @@ class NewsDAO extends AbstractDAO {
 		return $result->fetchAll();
 	}
 	
+	public function findVisibleCount() {
+		$query = $this->conn->select('COUNT(*)')->from($this->table)->where('visible=%i', 1);
+		$result = $query->execute();
+		
+		return $result->fetchSingle();
+	}
+	
 	public function find($id) {
 		// return $this->em->find(new NewsEntity(), $id);
 		

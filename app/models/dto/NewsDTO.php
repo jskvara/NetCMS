@@ -6,10 +6,6 @@ class NewsDTO {
 	public function __construct(NewsEntity $entity = null) {
 		$this->entity = $entity;
 	}
-	
-	public static function create(NewsEntity $entity) {
-		return new NewsDTO($entity);
-	}
 		
 	public function getId() {
 		return $this->entity->getId();

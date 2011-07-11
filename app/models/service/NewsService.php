@@ -16,12 +16,31 @@ class NewsService {
 		return $this->DAO->findAll();
 	}
 	
-	public function getHomepageNews() {
-		return $this->DAO->findVisible(5);
+	public function getHomepageNews($limit = 5) {
+		$homepageNews = $this->DAO->findVisible($limit);
+		$homepageNews = $this->convertToDTO($homepageNews);
+		
+		return $homepageNews;
 	}
 	
-	public function getVisible($limit = null, $offset = null) {
-		return $this->DAO->findVisible($limit, $offset);
+	public function getNews($limit = null, $offset = null) {
+		$news = $this->DAO->findVisible($limit, $offset);
+		$news = $news = $this->convertToDTO($news);
+		
+		return $news;
+	}
+	
+	public function getNewsCount() {
+		return $this->DAO->findVisibleCount();
+	}
+	
+	protected function convertToDTO(array $news) {
+		$converted = array();
+		foreach ($news as $item) {
+			$converted[] = new NewsDTO($item);
+		}
+		
+		return $converted;
 	}
 	
 	public function get($id) {

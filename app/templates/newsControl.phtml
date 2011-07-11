@@ -1,13 +1,11 @@
-<div id="news">
-  {var $homepageNews $newsService->getHomepageNews()}
-  <h3>Novinky</h3>
-  {ifset $homepageNews}
-  <ul>
-  {foreach $homepageNews as $hpNews}
-    <li>{$hpNews->getTitle()}</li>
-  {/foreach}
-  </ul>
-  {else}
+{ifset $news}
+{foreach $news as $item}
+  <div>
+    <h3>{$item->getTitle()} ({$item->getCreated()})</h3>
+    {!$item->getText()}
+  </div>
+{/foreach}
+{widget paginator}
+{else}
   <p>Nebyly přidány žádné novinky</p>
-  {/if}
-</div>
+{/if}
