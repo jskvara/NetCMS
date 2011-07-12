@@ -14,8 +14,8 @@
 
 {foreach $itemsCollection as $item}
 <tr>
-	<td>/{$item->getOriginal()}/</td>
-	<td>/{$item->getTranslation()}/</td>
+	<td>{if $item->getOriginal() !== ""}/{/if}{$item->getOriginal()}/</td>
+	<td>{if $item->getTranslation() !== ""}/{/if}{$item->getTranslation()}/</td>
 	<td>
 		<a href="{link edit, $item->getId()}">Upravit</a> &nbsp;
 		<a href="{link delete, $item->getId()}">Smazat</a>

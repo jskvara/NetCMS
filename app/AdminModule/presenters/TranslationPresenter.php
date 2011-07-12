@@ -38,7 +38,7 @@ final class Admin_TranslationPresenter extends Admin_BasePresenter {
 		$form = new AppForm();
 		$form->setRenderer(new ExtendedRenderer());
 		
-		$csPages = $this->pageService->getLanguageSelect('cs');
+		$csPages = $this->pageService->getLanguageSelect('cs', true);
 		$form->addSelect('original', 'Originál:', $csPages);
 		
 		$enPages = $this->pageService->getLanguageSelect('en');

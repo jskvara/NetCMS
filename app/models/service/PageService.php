@@ -32,9 +32,12 @@ class PageService {
 		return $select;
 	}
 	
-	public function getLanguageSelect($language) {
+	public function getLanguageSelect($language, $default = false) {
 		$pages = $this->DAO->findLanguage($language);
 		$select = array();
+		if ($default) {
+			$select[""] = "/";
+		}
 		foreach ($pages as $key => $page) {
 			$url = $page["url"];
 			$select[$url] = $url;

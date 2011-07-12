@@ -12,15 +12,11 @@ class TranslationService {
 		$this->validator = new TranslationValidator();
 	}
 	
-	public function getLanguage($url) {
-		if (strlen($url) < 2) {
-			return null;
+	public function getLanguage($url, $default = "cs") {
+		if (strlen($url) < 2 || (strlen($url > 2) && substr($url, 2, 1) !== "/")) {
+			return $default;
 		}
-		
-		if (strlen($url > 2) && substr($url, 2, 1) !== "/") {
-			return null;
-		}
-		
+				
 		return substr($url, 0, 2);
 	}
 	
