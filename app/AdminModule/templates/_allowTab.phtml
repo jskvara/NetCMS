@@ -1,0 +1,44 @@
+<script type="text/javascript">
+//<![CDATA[
+// original source: http://www.answermysearches.com/here-is-how-to-make-the-tab-work-in-a-textarea-javascript/265/
+// improved source (comments): http://ajaxian.com/archives/handling-tabs-in-textareas
+function tabTextarea(evt) {
+	var keyEvent = (evt || event);
+	var keyCode = keyEvent.keyCode;
+	var keyTarget = keyEvent.target ? keyEvent.target : keyEvent.srcElement ? keyEvent.srcElement : null;
+	if (keyCode==9 && keyTarget.tagName.toLowerCase() == "textarea") {
+	// if(keyEvent.ctrlKey && keyCode==81 && keyTarget.tagName.toLowerCase() == “textarea”) { // Ctrl+Q – Used to not effect normal tab functionality
+		var oldscroll = keyTarget.scrollTop;
+		if (keyTarget.setSelectionRange) { // Firefox, Chrome
+			var cursorPos = keyTarget.selectionEnd;
+			keyTarget.value = keyTarget.value.substring(0, keyTarget.selectionStart) +"\t"+
+				keyTarget.value.substring(keyTarget.selectionEnd, keyTarget.value.length);
+			cursorPos++;
+			keyTarget.setSelectionRange(cursorPos, cursorPos);
+		} else { // IE
+			// This much effort was almost unnecessary, but sometimes while tabbing, it would reset the cursor position to before the created tab
+			var textRange = document.selection.createRange();
+			textRange.text = "\t";
+			var selectionLength = textRange.text.length;
+			textRange.moveStart("character", -keyTarget.value.length);
+			var selectionStartPos = textRange.text.length-selectionLength;
+			var selectionEndPos = selectionStartPos+selectionLength;
+			if (selectionLength > 1) {
+				selectionLength = 1;
+				selectionEndPos = selectionStartPos + 1;
+			}
+			textRange = keyTarget.createTextRange();
+			textRange.collapse(true);
+			textRange.moveEnd("character", selectionEndPos);
+			textRange.moveStart("character", selectionEndPos);
+			textRange.select();
+		}
+		keyTarget.scrollTop = oldscroll; //put back the scroll
+		keyEvent.cancelBubble = true;
+		
+		return false;
+	}
+}
+document.onkeydown = tabTextarea;
+//]]>
+</script>
