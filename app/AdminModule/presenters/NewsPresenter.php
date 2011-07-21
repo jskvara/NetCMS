@@ -21,6 +21,27 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 		$this->template->items = $items;
 	}
 	
+	public function actionPdf($id = 0) {
+		$news = $this->newsService->get($id);
+		if ($news == null) {
+			$this->flashMessage('Novinka nebyla nalezena.', 'error');
+			$this->redirect('default');
+		}
+		
+		$template = $this->createTemplate()->setFile(APP_DIR ."/templates/newsPdf.phtml");
+		$template->item = new NewsDTO($news);
+		
+		$pdf = new PDFResponse($template);
+		$pdf->documentTitle = $news->getTitle();
+		$pdf->outputName = WWW_DIR ."/userfiles/pdf/". String::webalize($pdf->documentTitle).".pdf";
+		$pdf->outputDestination = PDFResponse::OUTPUT_FILE;
+		$pdf->send();
+		
+		$this->flashMessage('PDF bylo vygenerováno.', 'success');
+
+		$this->redirect('default');
+	}
+	
 	public function renderAdd() {
 		$this['newsForm']['save']->caption = 'Přidat';
 	}
