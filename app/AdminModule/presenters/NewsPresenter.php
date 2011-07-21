@@ -31,14 +31,47 @@ final class Admin_NewsPresenter extends Admin_BasePresenter {
 		$template = $this->createTemplate()->setFile(APP_DIR ."/templates/newsPdf.phtml");
 		$template->item = new NewsDTO($news);
 		
+		$fileName = WWW_DIR ."/userfiles/pdf/". String::webalize($news->getTitle()).".pdf";
+		
 		$pdf = new PDFResponse($template);
 		$pdf->documentTitle = $news->getTitle();
-		$pdf->outputName = WWW_DIR ."/userfiles/pdf/". String::webalize($pdf->documentTitle).".pdf";
+		$pdf->outputName = $fileName;
 		$pdf->outputDestination = PDFResponse::OUTPUT_FILE;
 		$pdf->send();
 		
-		$this->flashMessage('PDF bylo vygenerováno.', 'success');
-
+		if (!file_exists($fileName)) {
+			$this->flashMessage('PDF nebylo vygenerováno.', 'error');
+			$this->redirect('default');
+		}
+		
+		//$fileDownload = new AppFileDownload($this);
+		//$fileDownload->sourceFile = $fileName;
+		//$fileDownload->sourceFile = $fileName;
+		//$fileDownload->download();
+		//$this->terminate($fileDownload);
+		
+		if ($fd = fopen ($fileName, "r")) {
+			$fsize = filesize($fileName);
+			$path_parts = pathinfo($fileName);
+			$ext = strtolower($path_parts["extension"]);
+			switch ($ext) {
+			case "pdf":
+				header("Content-type: application/pdf");
+				header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\"");
+				break;
+			default;
+				header("Content-type: application/octet-stream");
+				header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
+			}
+			header("Content-length: $fsize");
+			header("Cache-control: private"); //use this to open files directly
+			while(!feof($fd)) {
+				$buffer = fread($fd, 2048);
+				echo $buffer;
+			}
+		}
+		fclose($fd);
+		
 		$this->redirect('default');
 	}
 	
