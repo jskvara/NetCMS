@@ -39,8 +39,8 @@ class TemplateValidator implements IValidator {
 			$this->errors[] = "Jméno šablony smí mít maximálně %d znaků.";
 		}
 		
-		if (!preg_match('/^[a-zA-Z0-9-_]+$/', $name)) {
-			$this->errors[] = "Jméno šablony smí obsahovat jen znaky: a-z, A-Z, 0-9, \"_\" a \"-\".";
+		if (!preg_match('/^[a-zA-Z0-9-_@]+$/', $name)) {
+			$this->errors[] = "Jméno šablony smí obsahovat jen znaky: a-z, A-Z, 0-9, _, - a @.";
 		}
 		
 		if ($this->DAO->exists($name)) {

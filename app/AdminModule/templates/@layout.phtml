@@ -18,6 +18,19 @@
 	<script type="text/javascript" src="{$basePath}/js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/jquery-ui-1.8.6.custom.min.js"></script>
 	<script type="text/javascript" src="{$basePath}/js/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/jquery.nette.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/jquery.ajaxform.js"></script>
+	<script type="text/javascript">
+$("form.ajax").live("submit", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
+
+$("form.ajax :submit").live("click", function () {
+    $(this).ajaxSubmit();
+    return false;
+});
+	</script>
 </head>
 <body>
 
@@ -70,9 +83,11 @@
   	
   	<h1>{block #h1}Administrace{/block}</h1>
   	
+  	{snippet flashMessage}
     {foreach $flashes as $flash}
     	<div class="{if $flash->type != null}{$flash->type}{else}notice{/if}">{!$flash->message}</div>
     {/foreach}
+    {/snippet}
     
     {include #content}
     
