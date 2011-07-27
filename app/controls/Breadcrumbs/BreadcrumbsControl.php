@@ -20,6 +20,9 @@ class BreadcrumbsControl extends Control {
 			$urlKey = "";
 			foreach ($urlParts as $key => $part) {
 				$urlKey .= $part;
+				if (!isset($pages[$urlKey])) {
+					break;
+				}
 				$breadcrumbs[] = $pages[$urlKey]->toArray();
 				$urlKey .= '/';
 			}
