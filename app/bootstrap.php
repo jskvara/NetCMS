@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-
 // Step 1: Load Nette Framework
 // this allows load Nette Framework classes automatically so that
 // you don't have to litter your code with 'require' statements
@@ -14,7 +12,7 @@ require LIBS_DIR . '/Nette/loader.php';
 
 // Step 2: Configure environment
 // 2a) enable Debug for better exception and error visualisation
-Debug::enable(Debug::DEVELOPMENT);Debug::$strictMode = true;Debug::enableProfiler();
+Debug::enable(Debug::DEVELOPMENT/*, null, 'jskvara@gmail.com'/);Debug::$strictMode = true;Debug::enableProfiler();
 
 // 2b) load configuration from config.ini file
 Environment::loadConfig();
