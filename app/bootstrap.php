@@ -12,7 +12,7 @@ require LIBS_DIR . '/Nette/loader.php';
 
 // Step 2: Configure environment
 // 2a) enable Debug for better exception and error visualisation
-Debug::enable(Debug::DEVELOPMENT/*, null, 'jskvara@gmail.com'/);Debug::$strictMode = true;Debug::enableProfiler();
+Debug::enable(Debug::DEVELOPMENT/*, TRUE, 'jskvara@gmail.com'*/);Debug::$strictMode = true;Debug::enableProfiler();
 
 // 2b) load configuration from config.ini file
 Environment::loadConfig();
