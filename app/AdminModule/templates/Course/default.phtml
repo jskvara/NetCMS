@@ -1,0 +1,22 @@
+{block #title}{block #h1}Kurzy{/block} | {include #parent}{/block}
+{block #content}
+
+<p><a href="{link add}">Přidat kurz</a></p>
+
+<table class="grid">
+<tr>
+	<th>Název</th>
+	<th>Akce</th>
+</tr>
+
+{foreach $items as $item}
+<tr>
+	<td>{$item->getName()}</td>
+	<td>
+		<a href="{link edit, $item->getId()}">Upravit</a> &nbsp;
+		<a href="{link delete, $item->getId()}">Smazat</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+{/block}
