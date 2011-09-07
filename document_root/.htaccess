@@ -14,8 +14,8 @@ Options -Indexes
 	# RewriteBase /
 	
 	# Redirect to www version
-	RewriteCond %{HTTP_HOST} ^dp-c.eu
-	RewriteRule (.*) http://www.dp-c.eu/$1 [R=301,L]
+	#RewriteCond %{HTTP_HOST} ^dp-c.eu
+	#RewriteRule (.*) http://www.dp-c.eu/$1 [R=301,L]
 
 	# Front controller
 	RewriteCond %{REQUEST_FILENAME} !-f
