@@ -6,14 +6,14 @@ abstract class AbstractValidator implements IValidator {
 	
 	protected $errors = array();
 	
-	protected $mode = "normal";
+	protected $mode = IValidator::EDIT;
 	
-	public function validate(IEntity $entity, $mode = "normal") {
+	public function validate(IEntity $entity, $mode = IValidator::EDIT) {
 		$this->entity = $entity;
 		$this->mode = $mode;
 		
 		$this->validateFields();
-			
+		
 		if (!empty($this->errors)) {
 			throw new ValidatorException($this->errors);
 		}
@@ -34,16 +34,16 @@ abstract class AbstractValidator implements IValidator {
 	
 	protected function validateNonNegative($field, $message = "Value %s cannot be negative") {
 		$value = $this->getValue($field);
-		if ($id < 0) {
+		if ($value < 0) {
 			$this->errors[] = sprintf($message, $field);
 		}
 		
 		return TRUE;
 	}
 	
-	protected function validateStringLength($field, $length = 255, $message = "Value %s must be less than %i characters long") {
+	protected function validateStringLength($field, $message = "Value %s must be less than %d characters long", $length = 255) {
 		$value = $this->getValue($field);
-		if (mb_strlen($value) > $lengtjh) {
+		if (mb_strlen($value) > $length) {
 			$this->errors[] = sprintf($message, $field, $length);
 		}
 		

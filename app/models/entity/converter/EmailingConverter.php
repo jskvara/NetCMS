@@ -1,9 +1,7 @@
 <?php
 
 class EmailingConverter extends AbstractConverter {
-	
-	private $entity;
-	
+		
 	public function convert(IEntity $entity) {
 		$this->entity = $entity;
 		$this->_convert();

@@ -2,61 +2,54 @@
 
 class CourseService {
 	
-	protected $courseDAO;
-	protected $courseConverter;
-	protected $courseValidator;
+	protected $DAO;
+	protected $converter;
+	protected $validator;
 	
 	public function __construct() {
-		$this->courseDAO = new DbCourseDAO();
-		$this->courseConverter = new CourseConverter();
-		$this->courseValidator = new CourseValidator();
+		$this->DAO = new DbCourseDAO();
+		$this->converter = new CourseConverter();
+		$this->validator = new CourseValidator();
 	}
 	
 	public function getAll() {
-		return $this->courseDAO->getAll();
+		return $this->DAO->getAll();
 	}
 	
 	public function get($id) {
-		return $this->DAO->find($id);
+		return $this->DAO->get($id);
 	}
 	
-/*	public function add($date, $text) {
-		$calendar = new CalendarEntity(null, $date, $text);
+	public function add($name) {
+		$entity = new CourseEntity(NULL, $name);
+
 		try {
-			$this->converter->convert($calendar);
-			$this->validator->validateAdd($calendar);
+			$entity = $this->converter->convert($entity);
+			$this->validator->validate($entity, IValidator::ADD);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
 		}
 		
-		$this->DAO->insert($calendar);
+		$this->DAO->insert($entity);
 		
-		return true;
+		return TRUE;
 	}
 	
-	public function edit($id, $date, $text) {
-		if ($this->validator->validateId($id) !== true) {
-			throw new ServiceException($this->validator->getLastError());
-		}
-		
-		$calendar = new CalendarEntity($id, $date, $text);
+	public function edit($id, $name) {
+		$entity = new CourseEntity($id, $name);
 		try {
-			$this->converter->convert($calendar);
-			$this->validator->validate($calendar);
+			$this->converter->convert($entity);
+			$this->validator->validate($entity);
 		} catch (Exception $e) {
 			throw new ServiceException($e);
 		}
 		
-		$this->DAO->update($calendar);
+		$this->DAO->update($entity);
 		
-		return true;
+		return TRUE;
 	}
 	
 	public function delete($id) {
-		if ($this->validator->validateId($id) !== true) {
-			throw new ServiceException($this->validator->getLastError());
-		}
-		
 		$this->DAO->delete($id);
-	}*/
+	}
 }

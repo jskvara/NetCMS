@@ -1,11 +1,7 @@
 <?php
 
 abstract class AbstractEntity implements IEntity {
-	
-	/*public function __construct(array $data = null) {
-		$this->fromArray($data);
-	}*/
-		
+			
 	public function fromArray(array $data = null) {
 		if ($data != null) {
 			foreach ($data as $propertyName => $propertyValue) {
@@ -43,7 +39,7 @@ abstract class AbstractEntity implements IEntity {
 	
 	public function getTable() {
 		$class = get_class($this);
-		$class = strToLower($class);
+		$class = strtolower($class);
 		$table = str_replace("entity", "", $class);
 		
 		return $table;

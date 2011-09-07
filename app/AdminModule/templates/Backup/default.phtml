@@ -1,0 +1,26 @@
+{block #title}{block #h1}Záloha{/block} | {include #parent}{/block}
+{block #content}
+
+<p>
+	<a href="{link database}">Záloha databáze</a> &nbsp;|&nbsp;
+	<a href="{link templates}">Záloha šablon</a> &nbsp;|&nbsp;
+	<a href="{link userfiles}">Záloha souborů</a>
+</p>
+
+<table class="grid">
+<tr>
+	<th>Soubor</th>
+	<th>Akce</th>
+</tr>
+{foreach $items as $item}
+<tr>
+	<td>{$item}</td>
+	<td>
+		<a href="{link download, $item}">Stáhnout</a> &nbsp;
+		<a href="{link delete, $item}">Smazat</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+
+{/block}

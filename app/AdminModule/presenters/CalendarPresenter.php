@@ -6,7 +6,6 @@ final class Admin_CalendarPresenter extends Admin_BasePresenter {
 
 	public function __construct() {
 		parent::__construct();
-		
 		$this->calendarService = new CalendarService();
 	}
 

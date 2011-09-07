@@ -27,20 +27,20 @@ class CourseTimeEntity extends AbstractEntity {
 	public function setId($id) {
 		$this->id = $id;
 	}
-		
-	protected function getCourseId() {
+	
+	public function getCourseId() {
 		return $this->courseId;
 	}
 	
-	protected function setCourseId($courseId) {
+	public function setCourseId($courseId) {
 		$this->courseId = $courseId;
 	}
 	
-	protected function getDate() {
+	public function getDate() {
 		return $this->date;
 	}
 	
-	protected function setDate($date) {
+	public function setDate($date) {
 		$this->date = $date;
 	}
 }

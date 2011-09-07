@@ -12,7 +12,7 @@ require LIBS_DIR . '/Nette/loader.php';
 
 // Step 2: Configure environment
 // 2a) enable Debug for better exception and error visualisation
-Debug::enable(Debug::DEVELOPMENT/*, null, 'jskvara@gmail.com'/);Debug::$strictMode = true;Debug::enableProfiler();
+Debug::enable(Debug::DEVELOPMENT, null, 'jskvara@gmail.com');Debug::$strictMode = true;Debug::enableProfiler();
 
 // 2b) load configuration from config.ini file
 Environment::loadConfig();
@@ -23,21 +23,13 @@ $application = Environment::getApplication();
 
 // Step 3a: Configure database connection
 dibi::connect(Environment::getConfig('database'));
-// $em = new EntityManager(dibi::getConnection());
-// Environment::setVariable('em', $em);
 
 // Step 3b: Set debug
 Debug::$counters['Last SQL query'] = & dibi::$sql;
-//Debug::$counters['Nette version']  = Framework::VERSION . ' ' . Framework::REVISION;
-//Debug::addPanel(dibi::getProfiler()->setFile(Environment::expand('%logDir%/dibi.log')));
-//Debug::$counters['Queries'] = dibi::getProfiler()->getPanel();
 
-/*
 // Step 3c: Service Locator
-$sl = Environment::getServiceLocator();
-$sl->addService('pageDAO', new PageDAO());
-$sl->addService('newsDAO', new NewsDAO());
-*/
+//$sl = Environment::getServiceLocator();
+//$sl->addService('pageDAO', new PageDAO());
 
 // Step 4: Setup application router
 $router = $application->getRouter();

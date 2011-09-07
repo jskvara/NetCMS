@@ -121,3 +121,30 @@ CREATE TABLE `blog` (
 ) ENGINE = INNODB DEFAULT CHARSET=utf8 COLLATE utf8_czech_ci;
 
 
+-- courses
+CREATE TABLE `courses` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NOT NULL DEFAULT '',
+	PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_czech_ci;
+
+
+-- course times
+CREATE TABLE `courseTimes` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`courseId` INT(11) UNSIGNED NOT NULL,
+	`date` DATE NOT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_course` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_czech_ci;
+
+
+-- course visitors
+CREATE TABLE `courseVisiors` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`courseTimeId` INT(11) UNSIGNED NOT NULL,
+	`email` VARCHAR(255) NOT NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `FK_courseTime` FOREIGN KEY (`courseTimeId`) REFERENCES `courseTimes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_czech_ci;
+

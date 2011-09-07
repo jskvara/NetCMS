@@ -1,7 +1,6 @@
-{block #title}{block #h1}Smazat záznam{/block} | {include #parent}{/block}
+{block #title}{block #h1}Smazat kurz{/block} | {include #parent}{/block}
 
 {block #content}
-<div class="notice">Opravdu chcete smazat záznam: ’{$news->getText()}’?</div>
+<div class="notice">Opravdu chcete smazat: ’{$item->getName()}’?</div>
 {widget deleteForm}
 {/block}
-

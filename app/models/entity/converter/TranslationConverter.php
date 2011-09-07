@@ -2,7 +2,8 @@
 
 class TranslationConverter extends AbstractConverter {
 	
-	private $entity;
+	protected function convertFields() {
+	}
 	
 	public function convert(IEntity $entity) {
 		$this->entity = $entity;

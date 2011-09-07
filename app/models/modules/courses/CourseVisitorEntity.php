@@ -28,19 +28,19 @@ class CourseVisitorEntity extends AbstractEntity {
 		$this->id = $id;
 	}
 	
-	protected function getCourseTimeId() {
+	public function getCourseTimeId() {
 		return $this->courseTimeId;
 	}
 	
-	protected function setCourseTimeId($courseTimeId) {
+	public function setCourseTimeId($courseTimeId) {
 		$this->courseTimeId = $courseTimeId;
 	}
 	
-	protected function getEmail() {
+	public function getEmail() {
 		return $this->email;
 	}
 	
-	protected function setEmail($email) {
+	public function setEmail($email) {
 		$this->email = $email;
 	}
 }
