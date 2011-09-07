@@ -1,0 +1,25 @@
+{block #title}{block #h1}Termíny{/block} | {include #parent}{/block}
+{block #content}
+
+<p><strong>Kurz: {$course->getName()}</strong></p>
+
+<p><a href="{link default,}">Kurzy</a> &nbsp;|&nbsp;
+<a href="{link addTime, $course->getId()}">Přidat termín</a></p>
+
+<table class="grid">
+<tr>
+	<th>Datum</th>
+	<th>Akce</th>
+</tr>
+{foreach $items as $item}
+<tr>
+	<td>{$item->getDate()}</td>
+	<td>
+		<a href="{link visitors, $item->getId()}">Účastnící</a> &nbsp;
+		<a href="{link editTime, $item->getId()}">Upravit</a> &nbsp;
+		<a href="{link deleteTime, $item->getId()}">Smazat</a>
+	</td>
+</tr>
+{/foreach}
+</table>
+{/block}
